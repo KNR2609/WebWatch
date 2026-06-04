@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Phase-4 Dashboard</title>
+
+</head>
+
+<body>
+
+    <h1>Pending Changes</h1>
+
+    <br>
+
+
+    {% if pending_data %}
+
+        <table border="1" cellpadding="10">
+
+            <tr>
+                <th>File</th>
+                <th>Records</th>
+                <th>Actions</th>
+            </tr>
+
+            {% for item in pending_data %}
+
+            <tr>
+
+                <td>
+
+                    <a href="/pending/{{ item.file }}">
+                        {{ item.file }}
+                    </a>
+
+                </td>
+
+                <td>
+                    {{ item.changes_count }}
+                </td>
+
+                <td>
+
+                    <a href="/approve/{{ item.file }}">
+                        Approve
+                    </a>
+
+                    |
+
+                    <a href="/reject/{{ item.file }}">
+                        Reject
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    {% else %}
+
+        <p>
+            No pending changes
+        </p>
+
+    {% endif %}
+
+</body>
+
+</html>

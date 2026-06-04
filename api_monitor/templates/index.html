@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WordPress API Monitor</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .run-btn {
+            background: #2563eb;
+            color: white;
+            padding: 12px 18px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .disabled-btn {
+            pointer-events: none;
+            opacity: 0.5;
+            background: #6b7280;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            font-size: 14px;
+        }
+
+        th {
+            background: #111827;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            vertical-align: top;
+        }
+
+        tr.change {
+            background: #fff7ed;
+        }
+
+        tr.failed {
+            background: #fee2e2;
+        }
+
+        tr.baseline {
+            background: #eff6ff;
+        }
+
+        .small-text {
+            max-width: 320px;
+            max-height: 130px;
+            overflow: auto;
+            white-space: pre-wrap;
+            font-size: 12px;
+        }
+
+        .link {
+            color: #2563eb;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        .approve-btn {
+            background: #16a34a;
+            color: white;
+            padding: 6px 10px;
+            text-decoration: none;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .reject-btn {
+            background: #dc2626;
+            color: white;
+            padding: 6px 10px;
+            text-decoration: none;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .pending {
+            color: #d97706;
+            font-weight: bold;
+        }
+
+        .approved {
+            color: #16a34a;
+            font-weight: bold;
+        }
+
+        .rejected {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .not-required {
+            color: #6b7280;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-bar">
+        <div>
+            <h1>WordPress API Monitoring Dashboard</h1>
+            <p>Showing only baseline created, API failed, and changed API records.</p>
+        </div>
+
+        <a id="runBtn" class="run-btn {% if is_running %}disabled-btn{% endif %}" href="/run">
+            {% if is_running %}
+                Monitoring Running...
+            {% else %}
+                Run Monitoring
+            {% endif %}
+        </a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Website Name</th>
+                <th>API Type</th>
+                <th>Website URL</th>
+                <th>API Key</th>
+                <th>Status</th>
+                <th>Field Changed</th>
+                <th>Before (Baseline)</th>
+                <th>After (Current)</th>
+                <th>Checked Time</th>
+                <th>Approval Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for result in results|reverse %}
+
+                {% if result.status != "No Change" %}
+
+                    {% set row_class = "" %}
+
+                    {% if result.status == "Change Detected" %}
+                        {% set row_class = "change" %}
+                    {% elif result.status == "API Failed" %}
+                        {% set row_class = "failed" %}
+                    {% elif result.status == "Baseline Created" %}
+                        {% set row_class = "baseline" %}
+                    {% endif %}
+
+                    <tr class="{{ row_class }}">
+                        <td>{{ result.website_name }}</td>
+                        <td>{{ result.api_type }}</td>
+
+                        <td>
+                            <a class="link" href="{{ result.website_url }}" target="_blank">
+                                View Website
+                            </a>
+                        </td>
+
+                        <td>
+                            <a class="link" href="{{ result.api_url }}" target="_blank">
+                                View API
+                            </a>
+                        </td>
+
+                        <td><b>{{ result.status }}</b></td>
+
+                        <td>{{ result.changed_field }}</td>
+
+                        <td>
+                            <div class="small-text">
+                                {{ result.before_value if result.before_value is defined else result.old_value }}
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="small-text">
+                                {{ result.after_value if result.after_value is defined else result.new_value }}
+                            </div>
+                        </td>
+
+                        <td>{{ result.checked_time }}</td>
+
+                        <td>
+                            {% if result.approval_status == "Pending" %}
+                                <span class="pending">Pending</span>
+                            {% elif result.approval_status == "Approved" %}
+                                <span class="approved">Approved</span>
+                            {% elif result.approval_status == "Rejected" %}
+                                <span class="rejected">Rejected</span>
+                            {% else %}
+                                <span class="not-required">{{ result.approval_status }}</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if result.approval_status == "Pending" %}
+                                <a class="approve-btn" href="/approve/{{ result.id }}">Approve</a>
+                                <br>
+                                <a class="reject-btn" href="/reject/{{ result.id }}">Reject</a>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                {% endif %}
+
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        const runBtn = document.getElementById("runBtn");
+
+        runBtn.addEventListener("click", function () {
+            runBtn.innerText = "Monitoring Running...";
+            runBtn.classList.add("disabled-btn");
+        });
+
+        function checkRunningStatus() {
+            fetch("/status")
+                .then(response => response.json())
+                .then(data => {
+                    if (data.is_running) {
+                        runBtn.innerText = "Monitoring Running...";
+                        runBtn.classList.add("disabled-btn");
+                    } else {
+                        runBtn.innerText = "Run Monitoring";
+                        runBtn.classList.remove("disabled-btn");
+                    }
+                })
+                .catch(error => {
+                    console.log("Status check failed:", error);
+                });
+        }
+
+        setInterval(checkRunningStatus, 1000);
+        checkRunningStatus();
+    </script>
+
+</body>
+</html>

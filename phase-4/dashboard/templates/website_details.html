@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Website Details</title>
+
+</head>
+
+<body>
+
+    <h1>{{ website_name }}</h1>
+
+    <br>
+
+    <h2>API Name</h2>
+
+    <p>
+        {{ api_name }}
+    </p>
+
+    <br>
+
+    <h2>Changes</h2>
+
+    <pre>
+{{ data | tojson(indent=4) }}
+    </pre>
+
+    <br>
+
+    <a href="/">
+        Back To Dashboard
+    </a>
+
+</body>
+
+</html>

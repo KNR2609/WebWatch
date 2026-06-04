@@ -1,0 +1,12 @@
+body { font-family: sans-serif; background: #121212; color: white; padding: 20px; }
+header { display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 20px; }
+.change-card { background: #1e1e1e; padding: 20px; margin: 20px 0; border-radius: 8px; }
+.image-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 15px; }
+img { width: 100%; border: 1px solid #444; border-radius: 4px; }
+label { display: block; font-weight: bold; margin-bottom: 5px; color: #aaa; }
+button { padding: 10px 20px; cursor: pointer; border-radius: 4px; border: none; }
+#runBtn { background: #007bff; color: white; }
+#runBtn:disabled { background: #444; }
+.approve { background: #28a745; color: white; margin-right: 10px; }
+.reject { background: #dc3545; color: white; }
+.hidden { display: none; }

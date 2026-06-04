@@ -1,0 +1,584 @@
+[
+  {
+    "name": "TechVersions",
+    "pages": {
+      "home": "https://techversions.com/",
+      "resources": "https://techversions.com/resources/",
+      "contact": "https://techversions.com/contact-us/",
+      "resource_landing": "https://techversions.com/infographics/take-control-of-your-records-inventory-with-smart-sort/"
+    }
+  },
+  {
+    "name": "TechWeb Trends",
+    "pages": {
+      "home": "https://techwebtrends.com/",
+      "resources": "https://techwebtrends.com/resources/",
+      "contact": "https://techwebtrends.com/contact-us/",
+      "resource_landing": "https://techwebtrends.com/resources/creating-quick-fire-content-with-adobe-express/"
+    }
+  },
+  {
+    "name": "Techmaster Node",
+    "pages": {
+      "home": "https://techmasternode.com/",
+      "resources": "https://techmasternode.com/resources/",
+      "contact": "https://techmasternode.com/contact-us/",
+      "resource_landing": "https://techmasternode.com/resources/elevate-digital-experiences-for-frontline-workers/",
+      "typ": "https://techmasternode.com/automated-storage-and-retrieval-system-typ/"
+    }
+  },
+  {
+    "name": "Tech Affair",
+    "pages": {
+      "home": "https://thetechaffair.com/",
+      "resources": "https://thetechaffair.com/resources/",
+      "contact": "https://thetechaffair.com/contact-us/",
+      "resource_landing": "https://thetechaffair.com/resources/a-stress-test-for-your-estate-plan/"
+    }
+  },
+  {
+    "name": "Techpulse Daily",
+    "pages": {
+      "home": "https://techpulsedaily.com/",
+      "resources": "https://techpulsedaily.com/resources/",
+      "contact": "https://techpulsedaily.com/contact-us/",
+      "resource_landing": "https://techpulsedaily.com/resources/a-stress-test-for-your-estate-plan/"
+    }
+  },
+  {
+    "name": "The Technology Square",
+    "pages": {
+      "home": "https://thetechnologysquare.com/",
+      "resources": "https://thetechnologysquare.com/resources/",
+      "contact": "https://thetechnologysquare.com/contact-us/",
+      "resource_landing": "https://thetechnologysquare.com/resources/tax-function-operating-models-evolve-as-demands-escalate/"
+    }
+  },
+  {
+    "name": "Pro Tech Insights",
+    "pages": {
+      "home": "https://protechinsights.com/",
+      "resources": "https://protechinsights.com/resources/",
+      "contact": "https://protechinsights.com/contact-us/",
+      "resource_landing": "https://protechinsights.com/resources/kpmg-global-tech-report-energy-insights/"
+    }
+  },
+  {
+    "name": "Tech Alert Live",
+    "pages": {
+      "home": "https://techalertlive.com/",
+      "resources": "https://techalertlive.com/resources/",
+      "contact": "https://techalertlive.com/contact-us/",
+      "resource_landing": "https://techalertlive.com/resources/future-menus/",
+      "typ": "https://techalertlive.com/typ/scale-ai-training-without-slowdowns-typ/"
+    }
+  },
+  {
+    "name": "The Techno Digest",
+    "pages": {
+      "home": "https://thetechnodigest.com/",
+      "resources": "https://thetechnodigest.com/resources/",
+      "contact": "https://thetechnodigest.com/contact-us/",
+      "resource_landing": "https://thetechnodigest.com/resources/future-proofing-with-trusted-ai/"
+    }
+  },
+  {
+    "name": "The Techno Bytes",
+    "pages": {
+      "home": "https://thetechnobytes.com/",
+      "resources": "https://thetechnobytes.com/resources/",
+      "contact": "https://thetechnobytes.com/contact-us/",
+      "resource_landing": "https://thetechnobytes.com/resources/10-reasons-to-go-paperless/"
+    }
+  },
+  {
+    "name": "Technobeat Daily",
+    "pages": {
+      "home": "https://technobeatdaily.com/",
+      "resources": "https://technobeatdaily.com/resources/",
+      "contact": "https://technobeatdaily.com/contact-us/",
+      "resource_landing": "https://technobeatdaily.com/resources/driving-digital-advertising-platform-success/"
+    }
+  },
+  {
+    "name": "Protech Empire",
+    "pages": {
+      "home": "https://protechempire.com/",
+      "resources": "https://protechempire.com/resources/",
+      "contact": "https://protechempire.com/contact-us/",
+      "resource_landing": "https://protechempire.com/resources/future-proofing-with-trusted-ai/"
+    }
+  },
+  {
+    "name": "TechMaster Pros",
+    "pages": {
+      "home": "https://techmasterpros.com/",
+      "resources": "https://techmasterpros.com/resources/",
+      "contact": "https://techmasterpros.com/contact-us/",
+      "resource_landing": "https://techmasterpros.com/resources/state-of-commerce/"
+    }
+  },
+  {
+    "name": "Alltech Insights",
+    "pages": {
+      "home": "https://alltechinsights.com/",
+      "resources": "https://alltechinsights.com/resources/",
+      "contact": "https://alltechinsights.com/contact-us/",
+      "resource_landing": "https://alltechinsights.com/resources/put-ai-to-work-finance/"
+    }
+  },
+  {
+    "name": "Business Updates 360",
+    "pages": {
+      "home": "https://businessupdates360.com/",
+      "resources": "https://businessupdates360.com/resources/",
+      "contact": "https://businessupdates360.com/contact-us/",
+      "resource_landing": "https://businessupdates360.com/resources/future-menus/"
+    }
+  },
+  {
+    "name": "The Business Cover",
+    "pages": {
+      "home": "https://thebusinesscover.com/",
+      "resources": "https://thebusinesscover.com/resources/",
+      "contact": "https://thebusinesscover.com/contact-us/",
+      "resource_landing": "https://thebusinesscover.com/resources/reinventing-workplace-productivity/"
+    }
+  },
+  {
+    "name": "BizVersions",
+    "pages": {
+      "home": "https://bizversions.com/",
+      "resources": "https://bizversions.com/resources/",
+      "contact": "https://bizversions.com/contact-us/",
+      "resource_landing": "https://bizversions.com/resources/state-of-commerce/"
+    }
+  },
+  {
+    "name": "The Road to Profit",
+    "pages": {
+      "home": "https://theroadtoprofit.com/",
+      "resources": "https://theroadtoprofit.com/resources/",
+      "contact": "https://theroadtoprofit.com/contact-us/",
+      "resource_landing": "https://theroadtoprofit.com/resources/cio-guide-to-universal-api-management/",
+      "typ": "https://theroadtoprofit.com/typ/select-the-right-ai-model-typ/"
+    }
+  },
+  {
+    "name": "Growth Rate Finder",
+    "pages": {
+      "home": "https://growthratefinder.com/",
+      "resources": "https://growthratefinder.com/resources/",
+      "contact": "https://growthratefinder.com/contact-us/",
+      "resource_landing": "https://growthratefinder.com/resources/devices-reimagined/"
+    }
+  },
+  {
+    "name": "Business Innovations",
+    "pages": {
+      "home": "https://thebusinessinnovations.com/",
+      "resources": "https://thebusinessinnovations.com/resources/",
+      "contact": "https://thebusinessinnovations.com/contact-us/",
+      "resource_landing": "https://thebusinessinnovations.com/resources/cloud-lessons-learned/"
+    }
+  },
+  {
+    "name": "Business Narratives",
+    "pages": {
+      "home": "https://businessnarratives.com/",
+      "resources": "https://businessnarratives.com/resources/",
+      "contact": "https://businessnarratives.com/contact-us/",
+      "resource_landing": "https://businessnarratives.com/resources/a-stress-test-for-your-estate-plan/"
+    }
+  },
+  {
+    "name": "Best of Business Today",
+    "pages": {
+      "home": "https://bestofbusinesstoday.com/",
+      "resources": "https://bestofbusinesstoday.com/resources/",
+      "contact": "https://bestofbusinesstoday.com/contact-us/",
+      "resource_landing": "https://bestofbusinesstoday.com/resources/how-to-choose-a-cloud-backup-partner/"
+    }
+  },
+  {
+    "name": "Business Target",
+    "pages": {
+      "home": "https://business-target.com/",
+      "resources": "https://business-target.com/resources/",
+      "contact": "https://business-target.com/contact-us/",
+      "resource_landing": "https://business-target.com/resources/reinventing-workplace-productivity/"
+    }
+  },
+  {
+    "name": "Business Proinsights",
+    "pages": {
+      "home": "https://businessproinsights.com/",
+      "resources": "https://businessproinsights.com/resources/",
+      "contact": "https://businessproinsights.com/contact-us/",
+      "resource_landing": "https://businessproinsights.com/resources/the-mind-on-the-stream/"
+    }
+  },
+  {
+    "name": "Business Stories Today",
+    "pages": {
+      "home": "https://businessstoriestoday.com/",
+      "resources": "https://businessstoriestoday.com/resources/",
+      "contact": "https://businessstoriestoday.com/contact-us/",
+      "resource_landing": "https://businessstoriestoday.com/resources/a-stress-test-for-your-estate-plan/"
+    }
+  },
+  {
+    "name": "World Business Hour",
+    "pages": {
+      "home": "https://worldbusinesshour.com/",
+      "resources": "https://worldbusinesshour.com/resources/",
+      "contact": "https://worldbusinesshour.com/contact-us/",
+      "resource_landing": "https://worldbusinesshour.com/resources/a-stress-test-for-your-estate-plan/"
+    }
+  },
+  {
+    "name": "CXO Matters",
+    "pages": {
+      "home": "https://cxomatters.com/",
+      "resources": "https://cxomatters.com/resources/",
+      "contact": "https://cxomatters.com/contact-us/",
+      "resource_landing": "https://cxomatters.com/resources/a-stress-test-for-your-estate-plan/"
+    }
+  },
+  {
+    "name": "Business Mediums",
+    "pages": {
+      "home": "https://businessmediums.com/",
+      "resources": "https://businessmediums.com/resources/",
+      "contact": "https://businessmediums.com/contact-us/",
+      "resource_landing": "https://businessmediums.com/resources/future-menus/",
+      "typ": "https://businessmediums.com/typ/2025-buyers-guide-ibm-observability-products-typ/"
+    }
+  },
+  {
+    "name": "The Growth Insights",
+    "pages": {
+      "home": "https://thegrowthinsights.com/",
+      "resources": "https://thegrowthinsights.com/resources/",
+      "contact": "https://thegrowthinsights.com/contact-us/",
+      "resource_landing": "https://thegrowthinsights.com/resources/creative-trends-2025/"
+    }
+  },
+  {
+    "name": "Insights Living",
+    "pages": {
+      "home": "https://insightsliving.com/",
+      "resources": "https://insightsliving.com/resources/",
+      "contact": "https://insightsliving.com/contact-us/",
+      "resource_landing": "https://insightsliving.com/resources/future-proofing-with-trusted-ai/"
+    }
+  },
+  {
+    "name": "Infobytes Daily",
+    "pages": {
+      "home": "https://infobytesdaily.com/",
+      "resources": "https://infobytesdaily.com/resources/",
+      "contact": "https://infobytesdaily.com/contact-us/",
+      "resource_landing": "https://infobytesdaily.com/resources/put-ai-to-work-finance/"
+    }
+  },
+  {
+    "name": "Livingsights",
+    "pages": {
+      "home": "https://livingsights.com/",
+      "resources": "https://livingsights.com/resources/",
+      "contact": "https://livingsights.com/contact-us/",
+      "resource_landing": "https://livingsights.com/resources/creative-trends-2025/"
+    }
+  },
+  {
+    "name": "Delta Punch",
+    "pages": {
+      "home": "https://deltapunch.com/",
+      "resources": "https://deltapunch.com/resources/",
+      "contact": "https://deltapunch.com/contact-us/",
+      "resource_landing": "https://deltapunch.com/resources/future-proofing-with-trusted-ai/"
+    }
+  },
+  {
+    "name": "Infowatch Daily",
+    "pages": {
+      "home": "https://infowatchdaily.com/",
+      "resources": "https://infowatchdaily.com/resources/",
+      "contact": "https://infowatchdaily.com/contact-us/",
+      "resource_landing": "https://infowatchdaily.com/resources/a-stress-test-for-your-estate-plan/"
+    }
+  },
+  {
+    "name": "The Salesmark",
+    "pages": {
+      "home": "https://thesalesmark.com/",
+      "resources": "https://thesalesmark.com/resources/",
+      "contact": "https://thesalesmark.com/contact-us/",
+      "resource_landing": "https://thesalesmark.com/resources/state-of-commerce-2/"
+    }
+  },
+  {
+    "name": "Lead Marketwise",
+    "pages": {
+      "home": "https://leadmarketwise.com/",
+      "resources": "https://leadmarketwise.com/resources/",
+      "contact": "https://leadmarketwise.com/contact-us/",
+      "resource_landing": "https://leadmarketwise.com/resources/put-ai-to-work-finance/"
+    }
+  },
+  {
+    "name": "Digi Influence",
+    "pages": {
+      "home": "https://digiinfluence.com/",
+      "resources": "https://digiinfluence.com/resources/",
+      "contact": "https://digiinfluence.com/contact-us/",
+      "resource_landing": "https://digiinfluence.com/resources/a-stress-test-for-your-estate-plan/"
+    }
+  },
+  {
+    "name": "Market Insights Today",
+    "pages": {
+      "home": "https://marketinsightstoday.com/",
+      "resources": "https://marketinsightstoday.com/resources/",
+      "contact": "https://marketinsightstoday.com/contact-us/",
+      "resource_landing": "https://marketinsightstoday.com/resources/25-pro-sales-tips-for-2025/"
+    }
+  },
+  {
+    "name": "Sales Newton",
+    "pages": {
+      "home": "https://salesnewton.com/",
+      "resources": "https://salesnewton.com/resources/",
+      "contact": "https://salesnewton.com/contact-us/",
+      "resource_landing": "https://salesnewton.com/resources/future-menus/"
+    }
+  },
+  {
+    "name": "The Sales Insights",
+    "pages": {
+      "home": "https://thesalesinsights.com/",
+      "resources": "https://thesalesinsights.com/resources/",
+      "contact": "https://thesalesinsights.com/contact-us/",
+      "resource_landing": "https://thesalesinsights.com/resources/the-three-things-cios-really-want-from-ai/"
+    }
+  },
+  {
+    "name": "SalesMarket Scoop",
+    "pages": {
+      "home": "https://salesmarketscoop.com/",
+      "resources": "https://salesmarketscoop.com/resources/",
+      "contact": "https://salesmarketscoop.com/contact-us/",
+      "resource_landing": "https://salesmarketscoop.com/resources/25-pro-sales-tips-for-2025/"
+    }
+  },
+  {
+    "name": "Economic Matter",
+    "pages": {
+      "home": "https://economicmatter.com/",
+      "resources": "https://economicmatter.com/resources/",
+      "contact": "https://economicmatter.com/contact-us/",
+      "resource_landing": "https://economicmatter.com/resources/data-quality-for-private-markets-in-action/",
+      "typ": "https://economicmatter.com/typ/unlocking-the-factory-floor-typ/"
+    }
+  },
+  {
+    "name": "The Economy Digest",
+    "pages": {
+      "home": "https://theeconomydigest.com/",
+      "resources": "https://theeconomydigest.com/resources/",
+      "contact": "https://theeconomydigest.com/contact-us/",
+      "resource_landing": "https://theeconomydigest.com/resources/massdevices-surgical-robotics-special-report/"
+    }
+  },
+  {
+    "name": "Finance Pulse Daily",
+    "pages": {
+      "home": "https://financepulsedaily.com/",
+      "resources": "https://financepulsedaily.com/resources/",
+      "contact": "https://financepulsedaily.com/contact-us/",
+      "resource_landing": "https://financepulsedaily.com/resources/reinventing-workplace-productivity/"
+    }
+  },
+  {
+    "name": "The Finances Report",
+    "pages": {
+      "home": "https://thefinancesreport.com/",
+      "resources": "https://thefinancesreport.com/resources/",
+      "contact": "https://thefinancesreport.com/contact-us/",
+      "resource_landing": "https://thefinancesreport.com/resources/deliver-ai-empowered-software-factories/"
+    }
+  },
+  {
+    "name": "The HR Empire",
+    "pages": {
+      "home": "https://thehrempire.com/",
+      "resources": "https://thehrempire.com/resources/",
+      "contact": "https://thehrempire.com/contact-us/",
+      "resource_landing": "https://thehrempire.com/resources/deliver-ai-empowered-software-factories/",
+      "typ": "https://thehrempire.com/whats-next-for-fusion-applications-decision-intelligence-typ/"
+    }
+  },
+  {
+    "name": "HR Interests",
+    "pages": {
+      "home": "https://hrinterests.com/",
+      "resources": "https://hrinterests.com/resources/",
+      "contact": "https://hrinterests.com/contact-us/",
+      "resource_landing": "https://hrinterests.com/resources/reinventing-workplace-productivity/",
+      "typ": "https://hrinterests.com/typ/your-ai-is-only-as-good-as-your-data-typ/"
+    }
+  },
+  {
+    "name": "HR Pulse Daily",
+    "pages": {
+      "home": "https://hrpulsedaily.com/",
+      "resources": "https://hrpulsedaily.com/resources/",
+      "contact": "https://hrpulsedaily.com/contact-us/",
+      "resource_landing": "https://hrpulsedaily.com/resources/reshaping-service-experience-in-2025/"
+    }
+  },
+  {
+    "name": "HRM Ecosystem",
+    "pages": {
+      "home": "https://hrmecosystem.com/",
+      "resources": "https://hrmecosystem.com/resources/",
+      "contact": "https://hrmecosystem.com/contact-us/",
+      "resource_landing": "https://hrmecosystem.com/resources/reshaping-service-experience-in-2025/"
+    }
+  },
+  {
+    "name": "HR Trends Daily",
+    "pages": {
+      "home": "https://hrtrendsdaily.com/",
+      "resources": "https://hrtrendsdaily.com/resources/",
+      "contact": "https://hrtrendsdaily.com/contact-us/",
+      "resource_landing": "https://hrtrendsdaily.com/resources/put-ai-to-work/"
+    }
+  },
+  {
+    "name": "The HR Medium",
+    "pages": {
+      "home": "https://thehrmedium.com/",
+      "resources": "https://thehrmedium.com/resources/",
+      "contact": "https://thehrmedium.com/contact-us/",
+      "resource_landing": "https://thehrmedium.com/resources/future-menus/"
+    }
+  },
+  {
+    "name": "The Best of Blockchain",
+    "pages": {
+      "home": "https://thebestofblockchain.com/",
+      "resources": "https://thebestofblockchain.com/resources/",
+      "contact": "https://thebestofblockchain.com/contact-us/",
+      "resource_landing": "https://thebestofblockchain.com/resources/a-stress-test-for-your-estate-plan/"
+    }
+  },
+  {
+    "name": "Cloud Tech Alert",
+    "pages": {
+      "home": "https://cloud-tech-alert.com/",
+      "resources": "https://cloud-tech-alert.com/resources/",
+      "contact": "https://cloud-tech-alert.com/contact-us/",
+      "resource_landing": "https://cloud-tech-alert.com/resources/2023-chief-risk-officer-survey/",
+      "typ": "https://cloud-tech-alert.com/typ/the-customer-loyalty-playbook-for-retail-brands-typ/"
+    }
+  },
+  {
+    "name": "Healthcare Business Solution",
+    "pages": {
+      "home": "https://healthcarebusinesssolution.com/",
+      "resources": "https://healthcarebusinesssolution.com/resources/",
+      "contact": "https://healthcarebusinesssolution.com/contact-us/",
+      "resource_landing": "https://healthcarebusinesssolution.com/resources/creative-trends-2025/"
+    }
+  },
+  {
+    "name": "Healthcare Insights Today",
+    "pages": {
+      "home": "https://healthcareinsightstoday.com/",
+      "resources": "https://healthcareinsightstoday.com/resources/",
+      "contact": "https://healthcareinsightstoday.com/contact-us/",
+      "resource_landing": "https://healthcareinsightstoday.com/resources/the-ai-platform-for-business-transformation/"
+    }
+  },
+  {
+    "name": "Regulatory Compliance News",
+    "pages": {
+      "home": "https://regulatorycompliancenews.com/",
+      "resources": "https://regulatorycompliancenews.com/resources/",
+      "contact": "https://regulatorycompliancenews.com/contact-us/",
+      "resource_landing": "https://regulatorycompliancenews.com/resources/get-to-know-the-content-cloud/"
+    }
+  },
+  {
+    "name": "Global Supply Chain News",
+    "pages": {
+      "home": "https://globalsupplychainnews.com/",
+      "resources": "https://globalsupplychainnews.com/resources/",
+      "contact": "https://globalsupplychainnews.com/contact-us/",
+      "resource_landing": "https://globalsupplychainnews.com/resources/retail-customer-engagement-review-2025/"
+    }
+  },
+  {
+    "name": "LearningTech Edu",
+    "pages": {
+      "home": "https://learningtechedu.com/",
+      "resources": "https://learningtechedu.com/resources/",
+      "contact": "https://learningtechedu.com/contact-us/",
+      "resource_landing": "https://learningtechedu.com/resources/deliver-ai-empowered-software-factories/"
+    }
+  },
+  {
+    "name": "The Insights Today",
+    "pages": {
+      "home": "https://theinsightstoday.com/",
+      "resources": "https://theinsightstoday.com/resources/",
+      "contact": "https://theinsightstoday.com/contact-us/"
+    }
+  },
+  {
+    "name": "Focusedonhr",
+    "pages": {
+      "home": "https://focusedonhr.com/",
+      "resources": "https://focusedonhr.com/resources/",
+      "contact": "https://focusedonhr.com/contact-us/"
+    }
+  },
+  {
+    "name": "PublicAffairs Daily",
+    "pages": {
+      "home": "https://publicaffairsdaily.com/",
+      "resources": "https://publicaffairsdaily.com/resources/",
+      "contact": "https://publicaffairsdaily.com/contact-us/",
+      "resource_landing": "https://publicaffairsdaily.com/resources/put-ai-to-work-to-elevate-customer-experiences/"
+    }
+  },
+  {
+    "name": "Universal Insights",
+    "pages": {
+      "home": "https://theuniversalinsights.com/",
+      "resources": "https://theuniversalinsights.com/resources/",
+      "contact": "https://theuniversalinsights.com/contact-us/",
+      "resource_landing": "https://theuniversalinsights.com/resources/deliver-ai-empowered-software-factories/"
+    }
+  },
+  {
+    "name": "Finance Every Hour",
+    "pages": {
+      "home": "https://financeeveryhour.com/",
+      "resources": "https://financeeveryhour.com/resources/",
+      "contact": "https://financeeveryhour.com/contact-us/",
+      "resource_landing": "https://financeeveryhour.com/resources/cloud-lessons-learned/"
+    }
+  },
+  {
+    "name": "Business Leader Insights",
+    "pages": {
+      "home": "https://thebusinessleaderinsights.com/",
+      "resources": "https://thebusinessleaderinsights.com/resources/",
+      "contact": "https://thebusinessleaderinsights.com/contact-us/",
+      "resource_landing": "https://thebusinessleaderinsights.com/resources/industry-insights-report-ai-edition/"
+    }
+  }
+]

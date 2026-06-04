@@ -1,0 +1,9 @@
+flask
+selenium
+opencv-python
+scikit-image
+numpy
+pillow
+webdriver-manager
+beautifulsoup4
+requests

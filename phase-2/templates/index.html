@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Monitor Dashboard</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #121212; color: #e0e0e0; margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { text-align: center; color: #3498db; }
+        
+        /* Control Panel */
+        .controls { text-align: center; margin-bottom: 30px; padding: 20px; background: #1a1a1a; border-radius: 8px; }
+        .run-btn { background-color: #27ae60; color: white; padding: 12px 24px; font-size: 16px; border: none; border-radius: 4px; cursor: pointer; transition: 0.3s; }
+        .run-btn:disabled { background-color: #555; cursor: not-allowed; opacity: 0.7; }
+
+        /* Level 1: Website Header */
+        .website-row {
+            background: #2c3e50;
+            color: white;
+            padding: 15px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #34495e;
+        }
+        .website-row:hover { background: #34495e; }
+        .change-badge { background: #e74c3c; padding: 2px 10px; border-radius: 12px; font-size: 0.85em; font-weight: bold; }
+
+        /* Level 2: Page Details (Hidden by default) */
+        .details-container {
+            display: none; 
+            background: #1a1a1a;
+            padding: 20px;
+            border: 1px solid #2c3e50;
+            border-top: none;
+            margin-bottom: 20px;
+            border-radius: 0 0 5px 5px;
+        }
+
+        .page-card { background: #252525; margin-bottom: 30px; padding: 15px; border-radius: 8px; border-left: 5px solid #3498db; }
+        .image-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .img-box { text-align: center; }
+        .img-box label { display: block; color: #888; font-size: 11px; text-transform: uppercase; margin-bottom: 5px; }
+        img { width: 100%; border-radius: 4px; border: 1px solid #333; }
+
+        /* Action Buttons */
+        .approve { background-color: #2980b9; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; margin-right: 10px; }
+        .reject { background-color: #c0392b; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+        button:hover { opacity: 0.8; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>WebWatch Monitor</h1>
+    
+    <div class="controls">
+        <button id="runBtn" class="run-btn" onclick="runMonitor()">🚀 Run Monitoring Task</button>
+        <p id="statusText" style="margin-top: 10px; color: #aaa;"></p>
+    </div>
+
+    <div id="results">
+        </div>
+</div>
+
+<script>
+    // 1. Initial Load
+    window.onload = loadDashboard;
+
+    // 2. Start Monitoring
+    async function runMonitor() {
+        const btn = document.getElementById('runBtn');
+        const status = document.getElementById('statusText');
+        
+        btn.disabled = true;
+        btn.innerText = "⏳ System Running...";
+        status.innerText = "Capturing screenshots for 64 websites. Please wait...";
+
+        await fetch('/run', { method: 'POST' });
+        pollStatus();
+    }
+
+    // 3. Status Polling (Checks every 3 seconds)
+    async function pollStatus() {
+        const res = await fetch('/status');
+        const data = await res.json();
+        const btn = document.getElementById('runBtn');
+        const status = document.getElementById('statusText');
+
+        if (data.running) {
+            setTimeout(pollStatus, 3000);
+        } else {
+            // Re-enable when finished
+            btn.disabled = false;
+            btn.innerText = "🚀 Run Monitoring Task";
+            status.innerText = "Task complete! View results below.";
+            loadDashboard();
+        }
+    }
+
+    // 4. Level-1 & Level-2 Dashboard Rendering
+    async function loadDashboard() {
+        const res = await fetch('/results');
+        const data = await res.json();
+        const container = document.getElementById('results');
+        container.innerHTML = '';
+
+        if (Object.keys(data).length === 0) {
+            container.innerHTML = '<div style="text-align:center; padding:50px; color:#666;">✅ No UI changes found.</div>';
+            return;
+        }
+
+        for (const [site, pages] of Object.entries(data)) {
+            const siteWrapper = document.createElement('div');
+
+            // LEVEL 1: Header
+            const siteHeader = document.createElement('div');
+            siteHeader.className = 'website-row';
+            siteHeader.innerHTML = `
+                <strong>${site}</strong>
+                <span class="change-badge">${pages.length} Pages Changed</span>
+            `;
+
+            // LEVEL 2: Details
+            const detailsDiv = document.createElement('div');
+            detailsDiv.className = 'details-container';
+
+            pages.forEach(p => {
+                const pageCard = document.createElement('div');
+                pageCard.className = 'page-card';
+                pageCard.innerHTML = `
+                    <div style="margin-bottom:10px;">
+                        <strong>Page:</strong> ${p.page} | <a href="${p.url}" target="_blank" style="color:#3498db; text-decoration:none;">View Live</a>
+                    </div>
+                    <div class="image-grid">
+                        <div class="img-box"><label>Baseline</label><img src="/${p.baseline}"></div>
+                        <div class="img-box"><label>Current</label><img src="/${p.current}"></div>
+                        <div class="img-box"><label>Difference</label><img src="/${p.diff}"></div>
+                    </div>
+                    <div style="margin-top:15px;">
+                        <button class="approve" onclick="handleAction('${p.baseline}', '${p.current}', '${p.diff}', 'approve')">Approve</button>
+                        <button class="reject" onclick="handleAction('${p.baseline}', '${p.current}', '${p.diff}', 'reject')">Reject</button>
+                    </div>
+                `;
+                detailsDiv.appendChild(pageCard);
+            });
+
+            // Drill-down Toggle
+            siteHeader.onclick = () => {
+                const isVisible = detailsDiv.style.display === 'block';
+                detailsDiv.style.display = isVisible ? 'none' : 'block';
+            };
+
+            siteWrapper.appendChild(siteHeader);
+            siteWrapper.appendChild(detailsDiv);
+            container.appendChild(siteWrapper);
+        }
+    }
+
+    // 5. Handle Actions
+    async function handleAction(baseline, current, diff, action) {
+        await fetch('/action', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ baseline, current, diff, action })
+        });
+        loadDashboard();
+    }
+</script>
+
+</body>
+</html>

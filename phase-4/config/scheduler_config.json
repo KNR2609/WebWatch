@@ -1,0 +1,14 @@
+{
+    "weekday_interval_minutes": 40,
+
+    "weekend_run_times": [
+        "10:00",
+        "18:00"
+    ],
+
+    "max_workers": 10,
+
+    "request_timeout": 30,
+
+    "max_retries": 3
+}

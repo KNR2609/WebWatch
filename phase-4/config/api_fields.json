@@ -1,0 +1,58 @@
+{
+    "media": [
+        "slug",
+        "status",
+        "type",
+        "link",
+        "title",
+        "description",
+        "caption",
+        "alt_text",
+        "media_type",
+        "mime_type",
+        "media_details"
+    ],
+
+    "posts": [
+        "slug",
+        "status",
+        "link",
+        "title",
+        "excerpt",
+        "content",
+        "categories",
+        "tags",
+        "geo-location",
+        "sticky",
+        "format"
+    ],
+
+    "pages": [
+        "slug",
+        "status",
+        "link",
+        "title",
+        "excerpt",
+        "content",
+        "parent",
+        "template",
+        "sponsored_by",
+        "meta"
+    ],
+
+    "resources": [
+        "slug",
+        "status",
+        "type",
+        "link",
+        "title",
+        "excerpt",
+        "content",
+        "categories",
+        "tags",
+        "geo-location",
+        "resource_types",
+        "sponsored_by",
+        "meta"
+    ]
+}

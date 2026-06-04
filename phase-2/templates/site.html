@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ site_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>{{ site_name }}</h1>
+
+    <div class="top-bar">
+        <a href="{{ url_for('index') }}">⬅ Back to Websites</a>
+    </div>
+
+    {% if pages and pages|length > 0 %}
+        {% for change in pages %}
+            <div class="card">
+                <div class="card-header">
+                    <h2>{{ change.page }}</h2>
+                    <p><b>URL:</b> <a href="{{ change.url }}" target="_blank">{{ change.url }}</a></p>
+                </div>
+
+                <div class="images">
+                    <div class="img-box">
+                        <h3>Before</h3>
+                        <img src="{{ change.baseline }}" alt="Before screenshot" loading="lazy">
+                    </div>
+
+                    <div class="img-box">
+                        <h3>After</h3>
+                        <img src="{{ change.current }}" alt="After screenshot" loading="lazy">
+                    </div>
+
+                    <div class="img-box">
+                        <h3>Diff</h3>
+                        {% if change.diff %}
+                            <img src="{{ change.diff }}" alt="Diff screenshot" loading="lazy">
+                        {% else %}
+                            <p class="no-change">Diff not available.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <form method="POST" action="{{ url_for('approve') }}">
+                        <input type="hidden" name="baseline" value="{{ change.baseline }}">
+                        <input type="hidden" name="current" value="{{ change.current }}">
+                        <input type="hidden" name="diff" value="{{ change.diff }}">
+                        <button type="submit" class="approve">Approve</button>
+                    </form>
+
+                    <form method="POST" action="{{ url_for('reject') }}">
+                        <input type="hidden" name="baseline" value="{{ change.baseline }}">
+                        <input type="hidden" name="current" value="{{ change.current }}">
+                        <input type="hidden" name="diff" value="{{ change.diff }}">
+                        <button type="submit" class="reject">Reject</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="no-change">No changed pages found for this website.</p>
+    {% endif %}
+</div>
+</body>
+</html>

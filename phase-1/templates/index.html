@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Website Monitoring Dashboard</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:40px;
+}
+
+#stats{
+margin-bottom:20px;
+font-weight:bold;
+font-size:18px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+border:1px solid #ccc;
+padding:8px;
+text-align:left;
+}
+
+th{
+background:#f2f2f2;
+}
+
+.server-down{
+background-color:magenta;
+color:white;
+}
+
+.website-down{
+background-color:red;
+color:white;
+}
+
+.very-slow{
+background-color:yellow;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>Website Monitoring Dashboard</h2>
+
+<div id="stats">
+
+Total Sites: {{stats.total}} |
+Good: {{stats.good}} |
+Slow: {{stats.slow}} |
+Very Slow: {{stats.veryslow}} |
+Server Down: {{stats.serverdown}} |
+Website Down: {{stats.websitedown}}
+
+</div>
+
+<label>Search Website:</label>
+<input type="text" id="searchInput" placeholder="Enter website name" onkeyup="filterTable()">
+
+<label>Status:</label>
+<select id="statusFilter" onchange="filterTable()">
+
+<option value="">All</option>
+<option value="Good">Good</option>
+<option value="Slow">Slow</option>
+<option value="Very Slow">Very Slow</option>
+<option value="Server Down">Server Down</option>
+<option value="Website Down">Website Down</option>
+
+</select>
+
+<label>HTTP Code:</label>
+
+<select id="httpFilter" onchange="filterTable()">
+
+<option value="">All</option>
+<option value="200">200</option>
+<option value="301">301</option>
+<option value="302">302</option>
+<option value="403">403</option>
+<option value="404">404</option>
+<option value="500">500</option>
+<option value="503">503</option>
+
+</select>
+
+<table id="monitorTable">
+
+<tr>
+<th>Website Name</th>
+<th>URL</th>
+<th>Status</th>
+<th>Response Time (ms)</th>
+<th>HTTP Code</th>
+<th>HTTP Message</th>
+</tr>
+
+{% for site in results %}
+
+<tr class="
+{% if site.status.lower() == 'server down' %}
+server-down
+{% elif site.status.lower() == 'website down' %}
+website-down
+{% elif site.status.lower() == 'very slow' %}
+very-slow
+{% endif %}
+">
+
+<td>{{site.name}}</td>
+<td>{{site.url}}</td>
+<td>{{site.status}}</td>
+<td>{{site.response_time}}</td>
+<td>{{site.status_code}}</td>
+<td>{{site.http_message}}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<script>
+
+function filterTable(){
+
+let search=document.getElementById("searchInput").value.toLowerCase()
+let status=document.getElementById("statusFilter").value
+let http=document.getElementById("httpFilter").value
+
+let table=document.getElementById("monitorTable")
+let tr=table.getElementsByTagName("tr")
+
+for(let i=1;i<tr.length;i++){
+
+let name=tr[i].getElementsByTagName("td")[0].innerText.toLowerCase()
+let st=tr[i].getElementsByTagName("td")[2].innerText
+let code=tr[i].getElementsByTagName("td")[4].innerText
+
+let show=true
+
+if(search && !name.includes(search))
+show=false
+
+if(status && st!==status)
+show=false
+
+if(http && code!==http)
+show=false
+
+tr[i].style.display=show ? "" : "none"
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
+
