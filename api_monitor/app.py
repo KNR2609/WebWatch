@@ -95,7 +95,7 @@ def reject(result_id):
     reject_change(result_id)
     return redirect(url_for("index"))
 
-
+#test
 if __name__ == "__main__":
     app.run(
         debug=True,
