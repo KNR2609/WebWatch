@@ -61,6 +61,13 @@ def register_routes(app):
             pending_data=pending_data
         )
 
+    # Only map root "/" to dashboard if not already registered by another phase (e.g. Phase-1)
+    has_root = any(rule.rule == '/' for rule in app.url_map.iter_rules())
+    if not has_root:
+        @app.route("/", endpoint="dashboard_root")
+        def dashboard_root():
+            return dashboard()
+
     @app.route("/pending/<filename>")
     @app.route("/api/pending/<filename>")
     def pending_details(filename):
