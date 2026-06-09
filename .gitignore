@@ -8,3 +8,12 @@ __pycache__/
 storage/
 logs/
 *.log
+
+# Frontend & Node dependencies
+node_modules/
+dist/
+
+# Local environment variables
+.env
+.env.local
+.env.*.local

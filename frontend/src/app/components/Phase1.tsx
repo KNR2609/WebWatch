@@ -1,13 +1,59 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Phase1Website, WebsiteStatus } from '../types';
-import { generatePhase1Data } from '../data/phase1Data';
-import { Search, Filter, Circle } from 'lucide-react';
+import { Search, Filter, Circle, Loader2 } from 'lucide-react';
 
 export function Phase1() {
-  const [websites] = useState<Phase1Website[]>(generatePhase1Data());
+  const [websites, setWebsites] = useState<Phase1Website[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState<'all' | WebsiteStatus>('all');
   const [filterHttpCode, setFilterHttpCode] = useState<'all' | number>('all');
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  useEffect(() => {
+    let active = true;
+
+    async function fetchData() {
+      try {
+        const res = await fetch('http://localhost:5000/api/monitor');
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        const data = await res.json();
+        if (active) {
+          if (data && Array.isArray(data.results)) {
+            setWebsites(data.results);
+            setError(null);
+          } else {
+            throw new Error('Received invalid data format from backend');
+          }
+        }
+      } catch (err: any) {
+        if (active) {
+          setError(err.message || 'Failed to fetch monitoring data');
+        }
+      } finally {
+        if (active) {
+          setLoading(false);
+        }
+      }
+    }
+
+    fetchData();
+    const interval = setInterval(fetchData, 30000); // refresh every 30 seconds
+
+    return () => {
+      active = false;
+      clearInterval(interval);
+    };
+  }, [refreshTrigger]);
+
+  const handleRetry = () => {
+    setLoading(true);
+    setError(null);
+    setRefreshTrigger((prev) => prev + 1);
+  };
 
   const filteredWebsites = useMemo(() => {
     let filtered = websites;
@@ -53,6 +99,33 @@ export function Phase1() {
 
   return (
     <div className="h-full bg-gray-50 px-8 py-6 overflow-y-auto">
+      {error && (
+        <div className="mb-6 bg-red-50 border border-red-200 rounded-[16px] p-4 text-red-800 flex items-start gap-4 shadow-[0px_4px_12px_rgba(239,68,68,0.1)]">
+          <div className="flex-1">
+            <h4 className="text-[14px] font-bold text-red-900 mb-1">Backend Connection Error</h4>
+            <p className="text-[12px] text-red-700 mb-2">
+              Unable to reach the website monitoring backend server. Please verify that the Flask server is running at{' '}
+              <code className="bg-red-100 px-1.5 py-0.5 rounded font-mono text-red-800 text-[11px]">http://localhost:5000</code>.
+            </p>
+            <p className="text-[11px] text-red-600 font-mono">Error Details: {error}</p>
+          </div>
+          <button
+            onClick={handleRetry}
+            disabled={loading}
+            className="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white font-semibold text-[11px] rounded-[6px] transition-colors cursor-pointer shadow-sm flex items-center gap-1.5 disabled:bg-red-400 disabled:cursor-not-allowed"
+          >
+            {loading ? (
+              <>
+                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                <span>Retrying...</span>
+              </>
+            ) : (
+              <span>Retry Connection</span>
+            )}
+          </button>
+        </div>
+      )}
+
       <div className="mb-6 bg-white rounded-[16px] border border-gray-200 p-5 drop-shadow-[0px_4px_20px_rgba(149,157,165,0.25)]">
           <h2 className="text-[20px] font-bold text-gray-900 mb-4">Website Monitoring Dashboard</h2>
           <div className="flex flex-wrap gap-3 text-[12px]">
@@ -89,10 +162,11 @@ export function Phase1() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search from 63 sites"
+                placeholder={websites.length === 0 ? "No sites to search" : `Search from ${websites.length} sites`}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 text-[12px] border border-gray-300 rounded-[4px] bg-white focus:outline-none focus:ring-1 focus:ring-[#651fff] focus:border-[#651fff] transition-colors shadow-[inset_0px_1px_1px_0px_rgba(31,41,55,0.06)]"
+                disabled={websites.length === 0}
+                className="w-full pl-10 pr-4 py-2 text-[12px] border border-gray-300 rounded-[4px] bg-white focus:outline-none focus:ring-1 focus:ring-[#651fff] focus:border-[#651fff] transition-colors shadow-[inset_0px_1px_1px_0px_rgba(31,41,55,0.06)] disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
               />
             </div>
             <div className="relative">
@@ -100,7 +174,8 @@ export function Phase1() {
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value as any)}
-                className="pl-10 pr-8 py-2 text-[12px] border border-gray-300 rounded-[4px] bg-white focus:outline-none focus:ring-1 focus:ring-[#651fff] focus:border-[#651fff] appearance-none cursor-pointer min-w-[180px] transition-colors shadow-[inset_0px_1px_1px_0px_rgba(31,41,55,0.06)]"
+                disabled={websites.length === 0}
+                className="pl-10 pr-8 py-2 text-[12px] border border-gray-300 rounded-[4px] bg-white focus:outline-none focus:ring-1 focus:ring-[#651fff] focus:border-[#651fff] appearance-none cursor-pointer min-w-[180px] transition-colors shadow-[inset_0px_1px_1px_0px_rgba(31,41,55,0.06)] disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
               >
                 <option value="all">All Statuses</option>
                 <option value="Good">Good</option>
@@ -113,7 +188,8 @@ export function Phase1() {
             <select
               value={filterHttpCode}
               onChange={(e) => setFilterHttpCode(e.target.value === 'all' ? 'all' : Number(e.target.value))}
-              className="px-4 py-2 text-[12px] border border-gray-300 rounded-[4px] bg-white focus:outline-none focus:ring-1 focus:ring-[#651fff] focus:border-[#651fff] appearance-none cursor-pointer min-w-[150px] transition-colors shadow-[inset_0px_1px_1px_0px_rgba(31,41,55,0.06)]"
+              disabled={websites.length === 0}
+              className="px-4 py-2 text-[12px] border border-gray-300 rounded-[4px] bg-white focus:outline-none focus:ring-1 focus:ring-[#651fff] focus:border-[#651fff] appearance-none cursor-pointer min-w-[150px] transition-colors shadow-[inset_0px_1px_1px_0px_rgba(31,41,55,0.06)] disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
             >
               <option value="all">All HTTP Codes</option>
               <option value="200">200 - OK</option>
@@ -141,26 +217,59 @@ export function Phase1() {
                 </tr>
               </thead>
               <tbody>
-                {filteredWebsites.map((website) => {
-                  const rowStyle = getStatusRowStyle(website.status);
-                  return (
-                    <tr
-                      key={website.id}
-                      className={`${rowStyle} border-b border-[rgba(4,32,69,0.1)] hover:bg-gray-50 transition-colors`}
-                    >
-                      <td className="px-4 py-3 font-medium text-gray-900">{website.name}</td>
-                      <td className="px-4 py-3 text-gray-600 text-[14px]">{website.url}</td>
-                      <td className="px-4 py-3">
-                        <span className={`inline-flex items-center gap-1.5 ${website.status === 'Good' ? 'font-medium' : 'font-semibold'}`}>
-                          {website.status}
+                {loading && websites.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="px-4 py-12 text-center text-[#6b7280]">
+                      <div className="flex flex-col items-center justify-center gap-2">
+                        <Loader2 className="w-6 h-6 animate-spin text-[#651fff]" />
+                        <span>Fetching live monitoring data from backend...</span>
+                      </div>
+                    </td>
+                  </tr>
+                ) : error && websites.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="px-4 py-12 text-center text-red-500 font-medium">
+                      <div className="flex flex-col items-center justify-center gap-2">
+                        <span className="text-[16px] font-semibold">Failed to connect to backend</span>
+                        <span className="text-[12px] text-gray-500 max-w-[400px] mx-auto">
+                          Make sure the Flask backend app is running at <code className="bg-red-50 px-1.5 py-0.5 rounded text-red-600 font-mono">http://localhost:5000</code>.
                         </span>
-                      </td>
-                      <td className="px-4 py-3 font-mono text-[14px]">{website.responseTime}</td>
-                      <td className="px-4 py-3 font-mono text-[14px] font-medium">{website.httpCode}</td>
-                      <td className="px-4 py-3 text-[14px]">{website.httpMessage}</td>
-                    </tr>
-                  );
-                })}
+                        <span className="text-[11px] text-red-400 mt-1">({error})</span>
+                      </div>
+                    </td>
+                  </tr>
+                ) : filteredWebsites.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="px-4 py-8 text-center text-[#6b7280]">
+                      No websites found matching the criteria.
+                    </td>
+                  </tr>
+                ) : (
+                  filteredWebsites.map((website) => {
+                    const rowStyle = getStatusRowStyle(website.status);
+                    return (
+                      <tr
+                        key={website.id}
+                        className={`${rowStyle} border-b border-[rgba(4,32,69,0.1)] hover:bg-gray-50 transition-colors`}
+                      >
+                        <td className="px-4 py-3 font-medium text-gray-900">{website.name}</td>
+                        <td className="px-4 py-3 text-gray-600 text-[14px]">{website.url}</td>
+                        <td className="px-4 py-3">
+                          <span className={`inline-flex items-center gap-1.5 ${website.status === 'Good' ? 'font-medium' : 'font-semibold'}`}>
+                            {website.status}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 font-mono text-[14px]">
+                          {website.responseTime !== null && website.responseTime !== undefined ? `${website.responseTime} ms` : 'N/A'}
+                        </td>
+                        <td className="px-4 py-3 font-mono text-[14px] font-medium">
+                          {website.httpCode !== null && website.httpCode !== undefined ? website.httpCode : 'N/A'}
+                        </td>
+                        <td className="px-4 py-3 text-[14px]">{website.httpMessage || 'N/A'}</td>
+                      </tr>
+                    );
+                  })
+                )}
               </tbody>
             </table>
           </div>

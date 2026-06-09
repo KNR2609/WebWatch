@@ -6,9 +6,9 @@ export interface Phase1Website {
   name: string;
   url: string;
   status: WebsiteStatus;
-  responseTime: number;
-  httpCode: number;
-  httpMessage: string;
+  responseTime: number | null;
+  httpCode: number | null;
+  httpMessage: string | null;
 }
 
 // Phase 2 Types - DP Testing Errors
