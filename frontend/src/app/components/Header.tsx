@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Globe, ArrowRight, ArrowLeft, Bell } from 'lucide-react';
 import { Phase2Website } from '../types';
+import { PendingChange } from '../App';
 import { PendingChangesPopup } from './PendingChangesPopup';
 
 interface HeaderProps {
@@ -10,6 +11,8 @@ interface HeaderProps {
   phase2Websites: Phase2Website[];
   onApproveAll: (websiteId: string) => void;
   onRejectAll: (websiteId: string) => void;
+  pendingChanges: PendingChange[];
+  onRefreshPending: () => void;
 }
 
 export function Header({
@@ -19,11 +22,13 @@ export function Header({
   phase2Websites,
   onApproveAll,
   onRejectAll,
+  pendingChanges,
+  onRefreshPending,
 }: HeaderProps) {
   const [showPending, setShowPending] = useState(false);
 
-  const totalPending = phase2Websites.reduce(
-    (sum, w) => sum + w.issues.filter((i) => i.status === 'pending').length,
+  const totalPending = pendingChanges.reduce(
+    (sum, item) => sum + item.changes_count,
     0
   );
 
@@ -48,7 +53,7 @@ export function Header({
             >
               <Bell className="w-4 h-4" />
               Pending Changes
-              {totalPending > 0 && (
+              {totalPending >= 0 && (
                 <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 flex items-center justify-center rounded-full bg-[#651fff] text-white text-[10px] font-bold leading-none">
                   {totalPending}
                 </span>
@@ -80,10 +85,9 @@ export function Header({
       {/* Portal-style full-screen overlay */}
       {showPending && (
         <PendingChangesPopup
-          websites={phase2Websites}
+          pendingChanges={pendingChanges}
           onClose={() => setShowPending(false)}
-          onApproveAll={onApproveAll}
-          onRejectAll={onRejectAll}
+          onRefresh={onRefreshPending}
         />
       )}
     </>

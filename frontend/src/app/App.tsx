@@ -1,15 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Phase1 } from './components/Phase1';
 import { Phase2 } from './components/Phase2';
 import { generatePhase2Data } from './data/phase2Data';
 import { Phase2Website } from './types';
 
+export interface PendingChange {
+  file: string;
+  changes_count: number;
+}
+
 export default function App() {
   const [currentPhase, setCurrentPhase] = useState<'phase1' | 'phase2'>('phase1');
   const [isRunningTest, setIsRunningTest] = useState(false);
   const [progress, setProgress] = useState(0);
   const [phase2Websites, setPhase2Websites] = useState<Phase2Website[]>(generatePhase2Data());
+  const [pendingChanges, setPendingChanges] = useState<PendingChange[]>([]);
+
+  const fetchPendingChanges = async () => {
+    try {
+      const res = await fetch('http://localhost:5000/api/pending-changes');
+      if (res.ok) {
+        const data = await res.json();
+        setPendingChanges(data);
+      }
+    } catch (err) {
+      console.error('Failed to fetch pending changes:', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchPendingChanges();
+    const interval = setInterval(fetchPendingChanges, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleRunTest = () => {
     setIsRunningTest(true);
@@ -66,6 +90,8 @@ export default function App() {
         phase2Websites={phase2Websites}
         onApproveAll={handleApproveAll}
         onRejectAll={handleRejectAll}
+        pendingChanges={pendingChanges}
+        onRefreshPending={fetchPendingChanges}
       />
 
       <div className="flex-1 overflow-hidden">
