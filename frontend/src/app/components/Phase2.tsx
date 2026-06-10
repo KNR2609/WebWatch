@@ -4,15 +4,13 @@ import { generatePhase2Data } from '../data/phase2Data';
 import { Play, Search, ArrowUpDown, CheckCircle, XCircle, FileText } from 'lucide-react';
 import { TextDiff } from './TextDiff';
 
-interface Phase2Props {
-  isRunningTest: boolean;
-  progress: number;
-  onRunTest: () => void;
-  websites: Phase2Website[];
-}
-
-export function Phase2({ isRunningTest, progress, onRunTest, websites }: Phase2Props) {
-  const [selectedWebsite, setSelectedWebsite] = useState<Phase2Website | null>(websites[0]);
+export function Phase2() {
+  const [websites, setWebsites] = useState<Phase2Website[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isRunningTest, setIsRunningTest] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [selectedWebsite, setSelectedWebsite] = useState<Phase2Website | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState<'name' | 'issues-high' | 'issues-low'>('name');
   const [selectedImage, setSelectedImage] = useState<{ src: string; title: string } | null>(null);
@@ -21,47 +19,138 @@ export function Phase2({ isRunningTest, progress, onRunTest, websites }: Phase2P
     action: 'approve' | 'reject';
     websiteId: string;
   } | null>(null);
-  const [localWebsites, setLocalWebsites] = useState<Phase2Website[]>(websites);
+
+  const fetchResults = async (selectFirst = false) => {
+    try {
+      const res = await fetch('http://localhost:5000/api/dp-issues');
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const data = await res.json();
+      setWebsites(data);
+      setError(null);
+      if (selectFirst && data.length > 0) {
+        setSelectedWebsite(data[0]);
+      } else if (selectedWebsite) {
+        const updated = data.find((w: Phase2Website) => w.id === selectedWebsite.id);
+        if (updated) {
+          setSelectedWebsite(updated);
+        }
+      }
+    } catch (err: any) {
+      setError(err.message || 'Failed to fetch visual monitoring data');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    setLocalWebsites(websites);
-  }, [websites]);
+    fetchResults(true);
+    const interval = setInterval(() => {
+      fetchResults(false);
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleRunTest = async () => {
+    try {
+      const startRes = await fetch('http://localhost:5000/api/phase-2/run', {
+        method: 'POST',
+      });
+      if (!startRes.ok) {
+        console.error('Failed to start test');
+        return;
+      }
+      setIsRunningTest(true);
+      setProgress(0);
+
+      // Start an interval to estimate progress (up to 95%) and check status
+      let progressVal = 0;
+      const progressInterval = setInterval(() => {
+        progressVal = Math.min(progressVal + (100 / 60), 95);
+        setProgress(progressVal);
+      }, 1000);
+
+      const checkStatus = setInterval(async () => {
+        try {
+          const statusRes = await fetch('http://localhost:5000/api/phase-2/status');
+          if (statusRes.ok) {
+            const statusData = await statusRes.json();
+            if (!statusData.running) {
+              clearInterval(checkStatus);
+              clearInterval(progressInterval);
+              setProgress(100);
+              await fetchResults();
+              setTimeout(() => {
+                setIsRunningTest(false);
+                setProgress(0);
+              }, 500);
+            }
+          }
+        } catch (err) {
+          console.error('Error polling status:', err);
+        }
+      }, 3000);
+    } catch (err) {
+      console.error('Error running test:', err);
+    }
+  };
 
   const handleActionClick = (issueId: string, action: 'approve' | 'reject', websiteId: string) => {
     setConfirmAction({ issueId, action, websiteId });
   };
 
-  const handleConfirmAction = () => {
+  const handleConfirmAction = async () => {
     if (!confirmAction) return;
 
     const { issueId, action, websiteId } = confirmAction;
     const newStatus: IssueStatus = action === 'approve' ? 'approved' : 'rejected';
 
-    setLocalWebsites((prev) =>
-      prev.map((website) => {
-        if (website.id === websiteId) {
-          return {
-            ...website,
-            issues: website.issues.map((issue) =>
-              issue.id === issueId ? { ...issue, status: newStatus } : issue
-            ),
-          };
-        }
-        return website;
-      })
-    );
+    const website = websites.find((w) => w.id === websiteId);
+    const issue = website?.issues.find((i) => i.id === issueId);
 
-    if (selectedWebsite?.id === websiteId) {
-      setSelectedWebsite((prev) =>
-        prev
-          ? {
-              ...prev,
-              issues: prev.issues.map((issue) =>
-                issue.id === issueId ? { ...issue, status: newStatus } : issue
+    if (website && issue) {
+      // Optimistic update
+      setWebsites((prev) =>
+        prev.map((w) => {
+          if (w.id === websiteId) {
+            return {
+              ...w,
+              issues: w.issues.map((i) =>
+                i.id === issueId ? { ...i, status: newStatus } : i
               ),
-            }
-          : null
+            };
+          }
+          return w;
+        })
       );
+      if (selectedWebsite?.id === websiteId) {
+        setSelectedWebsite((prev) =>
+          prev
+            ? {
+                ...prev,
+                issues: prev.issues.map((i) =>
+                  i.id === issueId ? { ...i, status: newStatus } : i
+                ),
+              }
+            : null
+        );
+      }
+
+      try {
+        const res = await fetch('http://localhost:5000/api/phase-2/action', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action, website: website.name, page: issue.page }),
+        });
+        if (res.ok) {
+          await fetchResults();
+        } else {
+          console.error('Failed to perform action');
+        }
+      } catch (err) {
+        console.error('Error performing action:', err);
+      }
     }
 
     setConfirmAction(null);
@@ -72,7 +161,7 @@ export function Phase2({ isRunningTest, progress, onRunTest, websites }: Phase2P
   };
 
   const filteredAndSortedWebsites = useMemo(() => {
-    let filtered = localWebsites;
+    let filtered = websites;
 
     if (searchTerm) {
       filtered = filtered.filter(
@@ -93,7 +182,7 @@ export function Phase2({ isRunningTest, progress, onRunTest, websites }: Phase2P
     });
 
     return sorted;
-  }, [localWebsites, searchTerm, sortBy]);
+  }, [websites, searchTerm, sortBy]);
 
   return (
     <div className="flex h-full bg-gray-50">
@@ -103,7 +192,7 @@ export function Phase2({ isRunningTest, progress, onRunTest, websites }: Phase2P
           <h3 className="text-[16px] font-bold mb-4 text-gray-900">DP Testing Errors</h3>
 
           <button
-            onClick={onRunTest}
+            onClick={handleRunTest}
             disabled={isRunningTest}
             className={`w-full mb-4 px-4 py-2 text-[12px] flex items-center justify-center gap-2 transition-colors ${
               isRunningTest

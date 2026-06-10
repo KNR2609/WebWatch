@@ -34,6 +34,18 @@ unified_app.static_folder = phase_4_static
 from dashboard.routes import register_routes as register_phase_4_routes  # type: ignore # noqa: E402
 register_phase_4_routes(unified_app)
 
+# Load and register phase-2 routes dynamically to avoid naming conflict with phase-1's app.py
+import importlib.util
+phase_2_path = os.path.join(project_root, 'phase-2')
+sys.path.insert(0, phase_2_path)
+spec = importlib.util.spec_from_file_location("phase_2_app", os.path.join(phase_2_path, "app.py"))
+phase_2_app = importlib.util.module_from_spec(spec)
+sys.modules["phase_2_app"] = phase_2_app
+spec.loader.exec_module(phase_2_app)
+sys.path.remove(phase_2_path)
+
+phase_2_app.register_routes(unified_app)
+
 # Phase-4 Scheduler loop
 from monitors.scheduler import run_scheduler  # type: ignore # noqa: E402
 

@@ -8,9 +8,6 @@ interface HeaderProps {
   currentPhase: 'phase1' | 'phase2';
   onNavigateToPhase1: () => void;
   onNavigateToPhase2: () => void;
-  phase2Websites: Phase2Website[];
-  onApproveAll: (websiteId: string) => void;
-  onRejectAll: (websiteId: string) => void;
   pendingChanges: PendingChange[];
   onRefreshPending: () => void;
 }
@@ -19,9 +16,6 @@ export function Header({
   currentPhase,
   onNavigateToPhase1,
   onNavigateToPhase2,
-  phase2Websites,
-  onApproveAll,
-  onRejectAll,
   pendingChanges,
   onRefreshPending,
 }: HeaderProps) {
