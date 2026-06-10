@@ -31,7 +31,7 @@ export function PendingChangesPopup({
 
   const handleAction = async (filename: string, action: 'approve' | 'reject') => {
     try {
-      const res = await fetch(`http://localhost:5000/api/${action}/${filename}`);
+      const res = await fetch(`http://localhost:5000/api/${action}/${encodeURIComponent(filename)}`);
       if (res.ok) {
         onRefresh();
       } else {
