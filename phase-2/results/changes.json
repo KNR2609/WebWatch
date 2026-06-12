@@ -13,7 +13,7 @@
         {
             "page": "home",
             "url": "https://techversions.com/",
-            "score": 0.894,
+            "score": 0.8937,
             "baseline": "data/screenshots/baseline/TechVersions_home.png",
             "current": "data/screenshots/current/TechVersions_home.png",
             "diff": "data/screenshots/diff/TechVersions_home.png"
@@ -67,7 +67,7 @@
         {
             "page": "home",
             "url": "https://thetechnodigest.com/",
-            "score": 0.7946,
+            "score": 0.8683,
             "baseline": "data/screenshots/baseline/The_Techno_Digest_home.png",
             "current": "data/screenshots/current/The_Techno_Digest_home.png",
             "diff": "data/screenshots/diff/The_Techno_Digest_home.png"
@@ -83,35 +83,17 @@
             "diff": "data/screenshots/diff/Technobeat_Daily_resource_landing.png"
         }
     ],
-    "Protech Empire": [
-        {
-            "page": "resources",
-            "url": "https://protechempire.com/resources/",
-            "score": 0.9468,
-            "baseline": "data/screenshots/baseline/Protech_Empire_resources.png",
-            "current": "data/screenshots/current/Protech_Empire_resources.png",
-            "diff": "data/screenshots/diff/Protech_Empire_resources.png"
-        }
-    ],
     "TechMaster Pros": [
         {
             "page": "resources",
             "url": "https://techmasterpros.com/resources/",
-            "score": 0.7627,
+            "score": 0.8355,
             "baseline": "data/screenshots/baseline/TechMaster_Pros_resources.png",
             "current": "data/screenshots/current/TechMaster_Pros_resources.png",
             "diff": "data/screenshots/diff/TechMaster_Pros_resources.png"
         }
     ],
     "Growth Rate Finder": [
-        {
-            "page": "home",
-            "url": "https://growthratefinder.com/",
-            "score": 0.882,
-            "baseline": "data/screenshots/baseline/Growth_Rate_Finder_home.png",
-            "current": "data/screenshots/current/Growth_Rate_Finder_home.png",
-            "diff": "data/screenshots/diff/Growth_Rate_Finder_home.png"
-        },
         {
             "page": "resources",
             "url": "https://growthratefinder.com/resources/",
@@ -127,13 +109,21 @@
             "baseline": "data/screenshots/baseline/Growth_Rate_Finder_contact.png",
             "current": "data/screenshots/current/Growth_Rate_Finder_contact.png",
             "diff": "data/screenshots/diff/Growth_Rate_Finder_contact.png"
+        },
+        {
+            "page": "resource_landing",
+            "url": "https://growthratefinder.com/resources/devices-reimagined/",
+            "score": 0.8808,
+            "baseline": "data/screenshots/baseline/Growth_Rate_Finder_resource_landing.png",
+            "current": "data/screenshots/current/Growth_Rate_Finder_resource_landing.png",
+            "diff": "data/screenshots/diff/Growth_Rate_Finder_resource_landing.png"
         }
     ],
     "Business Innovations": [
         {
             "page": "home",
             "url": "https://thebusinessinnovations.com/",
-            "score": 0.8867,
+            "score": 0.8933,
             "baseline": "data/screenshots/baseline/Business_Innovations_home.png",
             "current": "data/screenshots/current/Business_Innovations_home.png",
             "diff": "data/screenshots/diff/Business_Innovations_home.png"
@@ -163,29 +153,11 @@
             "diff": "data/screenshots/diff/Business_Innovations_resource_landing.png"
         }
     ],
-    "The Road to Profit": [
-        {
-            "page": "home",
-            "url": "https://theroadtoprofit.com/",
-            "score": 0.87,
-            "baseline": "data/screenshots/baseline/The_Road_to_Profit_home.png",
-            "current": "data/screenshots/current/The_Road_to_Profit_home.png",
-            "diff": "data/screenshots/diff/The_Road_to_Profit_home.png"
-        },
-        {
-            "page": "contact",
-            "url": "https://theroadtoprofit.com/contact-us/",
-            "score": 0.9483,
-            "baseline": "data/screenshots/baseline/The_Road_to_Profit_contact.png",
-            "current": "data/screenshots/current/The_Road_to_Profit_contact.png",
-            "diff": "data/screenshots/diff/The_Road_to_Profit_contact.png"
-        }
-    ],
     "Business Narratives": [
         {
             "page": "home",
             "url": "https://businessnarratives.com/",
-            "score": 0.8487,
+            "score": 0.9096,
             "baseline": "data/screenshots/baseline/Business_Narratives_home.png",
             "current": "data/screenshots/current/Business_Narratives_home.png",
             "diff": "data/screenshots/diff/Business_Narratives_home.png"
@@ -195,53 +167,27 @@
         {
             "page": "home",
             "url": "https://business-target.com/",
-            "score": 0.6466,
+            "score": 0.6474,
             "baseline": "data/screenshots/baseline/Business_Target_home.png",
             "current": "data/screenshots/current/Business_Target_home.png",
             "diff": "data/screenshots/diff/Business_Target_home.png"
-        },
-        {
-            "page": "resources",
-            "url": "https://business-target.com/resources/",
-            "score": 0.8626,
-            "baseline": "data/screenshots/baseline/Business_Target_resources.png",
-            "current": "data/screenshots/current/Business_Target_resources.png",
-            "diff": "data/screenshots/diff/Business_Target_resources.png"
-        },
-        {
-            "page": "contact",
-            "url": "https://business-target.com/contact-us/",
-            "score": 0.9672,
-            "baseline": "data/screenshots/baseline/Business_Target_contact.png",
-            "current": "data/screenshots/current/Business_Target_contact.png",
-            "diff": "data/screenshots/diff/Business_Target_contact.png"
-        }
-    ],
-    "CXO Matters": [
-        {
-            "page": "resources",
-            "url": "https://cxomatters.com/resources/",
-            "score": 0.951,
-            "baseline": "data/screenshots/baseline/CXO_Matters_resources.png",
-            "current": "data/screenshots/current/CXO_Matters_resources.png",
-            "diff": "data/screenshots/diff/CXO_Matters_resources.png"
         }
     ],
     "World Business Hour": [
         {
-            "page": "home",
-            "url": "https://worldbusinesshour.com/",
-            "score": 0.9474,
-            "baseline": "data/screenshots/baseline/World_Business_Hour_home.png",
-            "current": "data/screenshots/current/World_Business_Hour_home.png",
-            "diff": "data/screenshots/diff/World_Business_Hour_home.png"
+            "page": "contact",
+            "url": "https://worldbusinesshour.com/contact-us/",
+            "score": 0.9246,
+            "baseline": "data/screenshots/baseline/World_Business_Hour_contact.png",
+            "current": "data/screenshots/current/World_Business_Hour_contact.png",
+            "diff": "data/screenshots/diff/World_Business_Hour_contact.png"
         }
     ],
     "Lead Marketwise": [
         {
             "page": "home",
             "url": "https://leadmarketwise.com/",
-            "score": 0.7478,
+            "score": 0.7472,
             "baseline": "data/screenshots/baseline/Lead_Marketwise_home.png",
             "current": "data/screenshots/current/Lead_Marketwise_home.png",
             "diff": "data/screenshots/diff/Lead_Marketwise_home.png"
@@ -261,7 +207,7 @@
         {
             "page": "home",
             "url": "https://economicmatter.com/",
-            "score": 0.7866,
+            "score": 0.9781,
             "baseline": "data/screenshots/baseline/Economic_Matter_home.png",
             "current": "data/screenshots/current/Economic_Matter_home.png",
             "diff": "data/screenshots/diff/Economic_Matter_home.png"
@@ -269,21 +215,13 @@
         {
             "page": "resources",
             "url": "https://economicmatter.com/resources/",
-            "score": 0.5691,
+            "score": 0.5823,
             "baseline": "data/screenshots/baseline/Economic_Matter_resources.png",
             "current": "data/screenshots/current/Economic_Matter_resources.png",
             "diff": "data/screenshots/diff/Economic_Matter_resources.png"
         }
     ],
     "The HR Empire": [
-        {
-            "page": "home",
-            "url": "https://thehrempire.com/",
-            "score": 0.9734,
-            "baseline": "data/screenshots/baseline/The_HR_Empire_home.png",
-            "current": "data/screenshots/current/The_HR_Empire_home.png",
-            "diff": "data/screenshots/diff/The_HR_Empire_home.png"
-        },
         {
             "page": "typ",
             "url": "https://thehrempire.com/whats-next-for-fusion-applications-decision-intelligence-typ/",
@@ -295,14 +233,6 @@
     ],
     "HR Trends Daily": [
         {
-            "page": "home",
-            "url": "https://hrtrendsdaily.com/",
-            "score": 0.968,
-            "baseline": "data/screenshots/baseline/HR_Trends_Daily_home.png",
-            "current": "data/screenshots/current/HR_Trends_Daily_home.png",
-            "diff": "data/screenshots/diff/HR_Trends_Daily_home.png"
-        },
-        {
             "page": "resources",
             "url": "https://hrtrendsdaily.com/resources/",
             "score": 0.9783,
@@ -313,7 +243,7 @@
         {
             "page": "contact",
             "url": "https://hrtrendsdaily.com/contact-us/",
-            "score": 0.8284,
+            "score": 0.9507,
             "baseline": "data/screenshots/baseline/HR_Trends_Daily_contact.png",
             "current": "data/screenshots/current/HR_Trends_Daily_contact.png",
             "diff": "data/screenshots/diff/HR_Trends_Daily_contact.png"
@@ -323,7 +253,7 @@
         {
             "page": "home",
             "url": "https://thehrmedium.com/",
-            "score": 0.9622,
+            "score": 0.9614,
             "baseline": "data/screenshots/baseline/The_HR_Medium_home.png",
             "current": "data/screenshots/current/The_HR_Medium_home.png",
             "diff": "data/screenshots/diff/The_HR_Medium_home.png"
@@ -351,7 +281,7 @@
         {
             "page": "home",
             "url": "https://learningtechedu.com/",
-            "score": 0.8956,
+            "score": 0.8954,
             "baseline": "data/screenshots/baseline/LearningTech_Edu_home.png",
             "current": "data/screenshots/current/LearningTech_Edu_home.png",
             "diff": "data/screenshots/diff/LearningTech_Edu_home.png"
@@ -365,16 +295,54 @@
             "baseline": "data/screenshots/baseline/PublicAffairs_Daily_home.png",
             "current": "data/screenshots/current/PublicAffairs_Daily_home.png",
             "diff": "data/screenshots/diff/PublicAffairs_Daily_home.png"
-        }
-    ],
-    "Universal Insights": [
+        },
         {
             "page": "resources",
-            "url": "https://theuniversalinsights.com/resources/",
-            "score": 0.9298,
-            "baseline": "data/screenshots/baseline/Universal_Insights_resources.png",
-            "current": "data/screenshots/current/Universal_Insights_resources.png",
-            "diff": "data/screenshots/diff/Universal_Insights_resources.png"
+            "url": "https://publicaffairsdaily.com/resources/",
+            "score": 0.8155,
+            "baseline": "data/screenshots/baseline/PublicAffairs_Daily_resources.png",
+            "current": "data/screenshots/current/PublicAffairs_Daily_resources.png",
+            "diff": "data/screenshots/diff/PublicAffairs_Daily_resources.png"
+        }
+    ],
+    "Techmaster Node": [
+        {
+            "page": "home",
+            "url": "https://techmasternode.com/",
+            "score": 0.7748,
+            "baseline": "data/screenshots/baseline/Techmaster_Node_home.png",
+            "current": "data/screenshots/current/Techmaster_Node_home.png",
+            "diff": "data/screenshots/diff/Techmaster_Node_home.png"
+        }
+    ],
+    "Livingsights": [
+        {
+            "page": "home",
+            "url": "https://livingsights.com/",
+            "score": 0.9505,
+            "baseline": "data/screenshots/baseline/Livingsights_home.png",
+            "current": "data/screenshots/current/Livingsights_home.png",
+            "diff": "data/screenshots/diff/Livingsights_home.png"
+        }
+    ],
+    "Market Insights Today": [
+        {
+            "page": "home",
+            "url": "https://marketinsightstoday.com/",
+            "score": 0.8991,
+            "baseline": "data/screenshots/baseline/Market_Insights_Today_home.png",
+            "current": "data/screenshots/current/Market_Insights_Today_home.png",
+            "diff": "data/screenshots/diff/Market_Insights_Today_home.png"
+        }
+    ],
+    "The Finances Report": [
+        {
+            "page": "home",
+            "url": "https://thefinancesreport.com/",
+            "score": 0.8855,
+            "baseline": "data/screenshots/baseline/The_Finances_Report_home.png",
+            "current": "data/screenshots/current/The_Finances_Report_home.png",
+            "diff": "data/screenshots/diff/The_Finances_Report_home.png"
         }
     ]
 }

@@ -7,6 +7,8 @@ DIRS = [
     os.path.join(PHASE_2_ROOT, 'data/screenshots/baseline'),
     os.path.join(PHASE_2_ROOT, 'data/screenshots/current'),
     os.path.join(PHASE_2_ROOT, 'data/screenshots/diff'),
+    os.path.join(PHASE_2_ROOT, 'data/text/baseline'),
+    os.path.join(PHASE_2_ROOT, 'data/text/current'),
     os.path.join(PHASE_2_ROOT, 'results')
 ]
 

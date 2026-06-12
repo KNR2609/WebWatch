@@ -88,6 +88,10 @@ async def async_background_task():
                             c_path_rel = f"data/screenshots/current/{clean_name}.png"
                             d_path_rel = f"data/screenshots/diff/{clean_name}.png"
                             
+                            b_text_path_abs = os.path.join(PHASE_2_ROOT, "data", "text", "baseline", f"{clean_name}.txt")
+                            c_text_path_abs = os.path.join(PHASE_2_ROOT, "data", "text", "current", f"{clean_name}.txt")
+                            
+                            extracted_text = None
                             try:
                                 await page.goto(url, wait_until="load", timeout=90000)
                                 await asyncio.sleep(3)
@@ -118,6 +122,12 @@ async def async_background_task():
                                 await asyncio.sleep(3)
                                 await page.screenshot(path=c_path_abs, full_page=True)
                                 
+                                # Extract visible DOM text
+                                try:
+                                    extracted_text = await page.locator("body").inner_text()
+                                except Exception as txt_err:
+                                    print(f"Error extracting DOM text for {site_name} - {page_name}: {txt_err}")
+                                
                             except Exception as e:
                                 print(f"Error capturing screenshot for {site_name} - {page_name}: {e}")
                                 continue
@@ -138,6 +148,7 @@ async def async_background_task():
                                         changes_found.append({
                                             "page": page_name,
                                             "url": url,
+                                            "type": "screenshot",
                                             "score": round(score, 4),
                                             "baseline": b_path_rel,
                                             "current": c_path_rel,
@@ -145,6 +156,31 @@ async def async_background_task():
                                         })
                                 except Exception as e:
                                     print(f"Error comparing screenshots for {site_name} - {page_name}: {e}")
+                                    
+                            # Compare text content
+                            if extracted_text is not None:
+                                try:
+                                    # Save current text
+                                    with open(c_text_path_abs, "w", encoding="utf-8") as f:
+                                        f.write(extracted_text)
+                                        
+                                    if not os.path.exists(b_text_path_abs):
+                                        # Save baseline if not exists
+                                        shutil.copy(c_text_path_abs, b_text_path_abs)
+                                    else:
+                                        with open(b_text_path_abs, "r", encoding="utf-8") as f:
+                                            baseline_text = f.read()
+                                            
+                                        if extracted_text.strip() != baseline_text.strip():
+                                            changes_found.append({
+                                                "page": page_name,
+                                                "url": url,
+                                                "type": "text",
+                                                "baselineText": baseline_text,
+                                                "currentText": extracted_text
+                                            })
+                                except Exception as text_err:
+                                    print(f"Error comparing text for {site_name} - {page_name}: {text_err}")
 
                         await context.close()
 
@@ -238,15 +274,26 @@ def register_routes(flask_app):
                 base_url = request.host_url
                 if not base_url.endswith('/'):
                     base_url += '/'
-                issues.append({
-                    "id": f"issue-screenshot-{index}-{issue_idx}",
-                    "page": change["page"],
-                    "type": "screenshot",
-                    "status": "pending",
-                    "baselineScreenshot": f"{base_url}{change['baseline']}",
-                    "currentScreenshot": f"{base_url}{change['current']}",
-                    "differenceScreenshot": f"{base_url}{change['diff']}",
-                })
+                
+                if change.get("type") == "text":
+                    issues.append({
+                        "id": f"issue-text-{index}-{issue_idx}",
+                        "page": change["page"],
+                        "type": "text",
+                        "status": "pending",
+                        "baselineText": change.get("baselineText", ""),
+                        "currentText": change.get("currentText", ""),
+                    })
+                else:
+                    issues.append({
+                        "id": f"issue-screenshot-{index}-{issue_idx}",
+                        "page": change["page"],
+                        "type": "screenshot",
+                        "status": "pending",
+                        "baselineScreenshot": f"{base_url}{change['baseline']}",
+                        "currentScreenshot": f"{base_url}{change['current']}",
+                        "differenceScreenshot": f"{base_url}{change['diff']}",
+                    })
 
             results.append({
                 "id": f"website-{index}",
@@ -269,13 +316,20 @@ def register_routes(flask_app):
         baseline_abs = os.path.join(PHASE_2_ROOT, "data", "screenshots", "baseline", f"{clean_name}.png")
         current_abs = os.path.join(PHASE_2_ROOT, "data", "screenshots", "current", f"{clean_name}.png")
         diff_abs = os.path.join(PHASE_2_ROOT, "data", "screenshots", "diff", f"{clean_name}.png")
+        
+        baseline_text_abs = os.path.join(PHASE_2_ROOT, "data", "text", "baseline", f"{clean_name}.txt")
+        current_text_abs = os.path.join(PHASE_2_ROOT, "data", "text", "current", f"{clean_name}.txt")
 
         if action == 'approve':
             if os.path.exists(current_abs):
                 shutil.move(current_abs, baseline_abs)
+            if os.path.exists(current_text_abs):
+                shutil.move(current_text_abs, baseline_text_abs)
         else:
             if os.path.exists(current_abs):
                 os.remove(current_abs)
+            if os.path.exists(current_text_abs):
+                os.remove(current_text_abs)
         
         if os.path.exists(diff_abs): 
             os.remove(diff_abs)
