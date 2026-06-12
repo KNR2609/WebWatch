@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { X, ExternalLink, Check, XCircle } from 'lucide-react';
 import { PendingChange } from '../App';
+import { API_BASE_URL } from '../config';
 
 interface PendingChangesPopupProps {
   pendingChanges: PendingChange[];
@@ -31,7 +32,7 @@ export function PendingChangesPopup({
 
   const handleAction = async (filename: string, action: 'approve' | 'reject') => {
     try {
-      const res = await fetch(`http://localhost:5000/api/${action}/${encodeURIComponent(filename)}`);
+      const res = await fetch(`${API_BASE_URL}/api/${action}/${encodeURIComponent(filename)}`);
       if (res.ok) {
         onRefresh();
       } else {
@@ -122,7 +123,7 @@ export function PendingChangesPopup({
                       </td>
                       <td className="px-4 py-4">
                         <a
-                          href={`http://localhost:5000/pending/${item.file}`}
+                          href={`${API_BASE_URL}/pending/${item.file}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center gap-1.5 text-[13px] text-[#651fff] hover:underline font-medium"

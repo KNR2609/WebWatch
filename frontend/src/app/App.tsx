@@ -4,6 +4,7 @@ import { Phase1 } from './components/Phase1';
 import { Phase2 } from './components/Phase2';
 import { generatePhase2Data } from './data/phase2Data';
 import { Phase2Website } from './types';
+import { API_BASE_URL } from './config';
 
 export interface PendingChange {
   file: string;
@@ -16,7 +17,7 @@ export default function App() {
 
   const fetchPendingChanges = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/pending-changes');
+      const res = await fetch(`${API_BASE_URL}/api/pending-changes`);
       if (res.ok) {
         const data = await res.json();
         setPendingChanges(data);

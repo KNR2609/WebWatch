@@ -1,1 +1,380 @@
-{}
+{
+    "Techpulse Daily": [
+        {
+            "page": "home",
+            "url": "https://techpulsedaily.com/",
+            "score": 0.8983,
+            "baseline": "data/screenshots/baseline/Techpulse_Daily_home.png",
+            "current": "data/screenshots/current/Techpulse_Daily_home.png",
+            "diff": "data/screenshots/diff/Techpulse_Daily_home.png"
+        }
+    ],
+    "TechVersions": [
+        {
+            "page": "home",
+            "url": "https://techversions.com/",
+            "score": 0.894,
+            "baseline": "data/screenshots/baseline/TechVersions_home.png",
+            "current": "data/screenshots/current/TechVersions_home.png",
+            "diff": "data/screenshots/diff/TechVersions_home.png"
+        },
+        {
+            "page": "resources",
+            "url": "https://techversions.com/resources/",
+            "score": 0.9757,
+            "baseline": "data/screenshots/baseline/TechVersions_resources.png",
+            "current": "data/screenshots/current/TechVersions_resources.png",
+            "diff": "data/screenshots/diff/TechVersions_resources.png"
+        },
+        {
+            "page": "contact",
+            "url": "https://techversions.com/contact-us/",
+            "score": 0.9789,
+            "baseline": "data/screenshots/baseline/TechVersions_contact.png",
+            "current": "data/screenshots/current/TechVersions_contact.png",
+            "diff": "data/screenshots/diff/TechVersions_contact.png"
+        },
+        {
+            "page": "resource_landing",
+            "url": "https://techversions.com/infographics/take-control-of-your-records-inventory-with-smart-sort/",
+            "score": 0.9777,
+            "baseline": "data/screenshots/baseline/TechVersions_resource_landing.png",
+            "current": "data/screenshots/current/TechVersions_resource_landing.png",
+            "diff": "data/screenshots/diff/TechVersions_resource_landing.png"
+        }
+    ],
+    "Tech Affair": [
+        {
+            "page": "home",
+            "url": "https://thetechaffair.com/",
+            "score": 0.9504,
+            "baseline": "data/screenshots/baseline/Tech_Affair_home.png",
+            "current": "data/screenshots/current/Tech_Affair_home.png",
+            "diff": "data/screenshots/diff/Tech_Affair_home.png"
+        }
+    ],
+    "Pro Tech Insights": [
+        {
+            "page": "home",
+            "url": "https://protechinsights.com/",
+            "score": 0.7155,
+            "baseline": "data/screenshots/baseline/Pro_Tech_Insights_home.png",
+            "current": "data/screenshots/current/Pro_Tech_Insights_home.png",
+            "diff": "data/screenshots/diff/Pro_Tech_Insights_home.png"
+        }
+    ],
+    "The Techno Digest": [
+        {
+            "page": "home",
+            "url": "https://thetechnodigest.com/",
+            "score": 0.7946,
+            "baseline": "data/screenshots/baseline/The_Techno_Digest_home.png",
+            "current": "data/screenshots/current/The_Techno_Digest_home.png",
+            "diff": "data/screenshots/diff/The_Techno_Digest_home.png"
+        }
+    ],
+    "Technobeat Daily": [
+        {
+            "page": "resource_landing",
+            "url": "https://technobeatdaily.com/resources/driving-digital-advertising-platform-success/",
+            "score": 0.9765,
+            "baseline": "data/screenshots/baseline/Technobeat_Daily_resource_landing.png",
+            "current": "data/screenshots/current/Technobeat_Daily_resource_landing.png",
+            "diff": "data/screenshots/diff/Technobeat_Daily_resource_landing.png"
+        }
+    ],
+    "Protech Empire": [
+        {
+            "page": "resources",
+            "url": "https://protechempire.com/resources/",
+            "score": 0.9468,
+            "baseline": "data/screenshots/baseline/Protech_Empire_resources.png",
+            "current": "data/screenshots/current/Protech_Empire_resources.png",
+            "diff": "data/screenshots/diff/Protech_Empire_resources.png"
+        }
+    ],
+    "TechMaster Pros": [
+        {
+            "page": "resources",
+            "url": "https://techmasterpros.com/resources/",
+            "score": 0.7627,
+            "baseline": "data/screenshots/baseline/TechMaster_Pros_resources.png",
+            "current": "data/screenshots/current/TechMaster_Pros_resources.png",
+            "diff": "data/screenshots/diff/TechMaster_Pros_resources.png"
+        }
+    ],
+    "Growth Rate Finder": [
+        {
+            "page": "home",
+            "url": "https://growthratefinder.com/",
+            "score": 0.882,
+            "baseline": "data/screenshots/baseline/Growth_Rate_Finder_home.png",
+            "current": "data/screenshots/current/Growth_Rate_Finder_home.png",
+            "diff": "data/screenshots/diff/Growth_Rate_Finder_home.png"
+        },
+        {
+            "page": "resources",
+            "url": "https://growthratefinder.com/resources/",
+            "score": 0.9301,
+            "baseline": "data/screenshots/baseline/Growth_Rate_Finder_resources.png",
+            "current": "data/screenshots/current/Growth_Rate_Finder_resources.png",
+            "diff": "data/screenshots/diff/Growth_Rate_Finder_resources.png"
+        },
+        {
+            "page": "contact",
+            "url": "https://growthratefinder.com/contact-us/",
+            "score": 0.9593,
+            "baseline": "data/screenshots/baseline/Growth_Rate_Finder_contact.png",
+            "current": "data/screenshots/current/Growth_Rate_Finder_contact.png",
+            "diff": "data/screenshots/diff/Growth_Rate_Finder_contact.png"
+        }
+    ],
+    "Business Innovations": [
+        {
+            "page": "home",
+            "url": "https://thebusinessinnovations.com/",
+            "score": 0.8867,
+            "baseline": "data/screenshots/baseline/Business_Innovations_home.png",
+            "current": "data/screenshots/current/Business_Innovations_home.png",
+            "diff": "data/screenshots/diff/Business_Innovations_home.png"
+        },
+        {
+            "page": "resources",
+            "url": "https://thebusinessinnovations.com/resources/",
+            "score": 0.9594,
+            "baseline": "data/screenshots/baseline/Business_Innovations_resources.png",
+            "current": "data/screenshots/current/Business_Innovations_resources.png",
+            "diff": "data/screenshots/diff/Business_Innovations_resources.png"
+        },
+        {
+            "page": "contact",
+            "url": "https://thebusinessinnovations.com/contact-us/",
+            "score": 0.9517,
+            "baseline": "data/screenshots/baseline/Business_Innovations_contact.png",
+            "current": "data/screenshots/current/Business_Innovations_contact.png",
+            "diff": "data/screenshots/diff/Business_Innovations_contact.png"
+        },
+        {
+            "page": "resource_landing",
+            "url": "https://thebusinessinnovations.com/resources/cloud-lessons-learned/",
+            "score": 0.9326,
+            "baseline": "data/screenshots/baseline/Business_Innovations_resource_landing.png",
+            "current": "data/screenshots/current/Business_Innovations_resource_landing.png",
+            "diff": "data/screenshots/diff/Business_Innovations_resource_landing.png"
+        }
+    ],
+    "The Road to Profit": [
+        {
+            "page": "home",
+            "url": "https://theroadtoprofit.com/",
+            "score": 0.87,
+            "baseline": "data/screenshots/baseline/The_Road_to_Profit_home.png",
+            "current": "data/screenshots/current/The_Road_to_Profit_home.png",
+            "diff": "data/screenshots/diff/The_Road_to_Profit_home.png"
+        },
+        {
+            "page": "contact",
+            "url": "https://theroadtoprofit.com/contact-us/",
+            "score": 0.9483,
+            "baseline": "data/screenshots/baseline/The_Road_to_Profit_contact.png",
+            "current": "data/screenshots/current/The_Road_to_Profit_contact.png",
+            "diff": "data/screenshots/diff/The_Road_to_Profit_contact.png"
+        }
+    ],
+    "Business Narratives": [
+        {
+            "page": "home",
+            "url": "https://businessnarratives.com/",
+            "score": 0.8487,
+            "baseline": "data/screenshots/baseline/Business_Narratives_home.png",
+            "current": "data/screenshots/current/Business_Narratives_home.png",
+            "diff": "data/screenshots/diff/Business_Narratives_home.png"
+        }
+    ],
+    "Business Target": [
+        {
+            "page": "home",
+            "url": "https://business-target.com/",
+            "score": 0.6466,
+            "baseline": "data/screenshots/baseline/Business_Target_home.png",
+            "current": "data/screenshots/current/Business_Target_home.png",
+            "diff": "data/screenshots/diff/Business_Target_home.png"
+        },
+        {
+            "page": "resources",
+            "url": "https://business-target.com/resources/",
+            "score": 0.8626,
+            "baseline": "data/screenshots/baseline/Business_Target_resources.png",
+            "current": "data/screenshots/current/Business_Target_resources.png",
+            "diff": "data/screenshots/diff/Business_Target_resources.png"
+        },
+        {
+            "page": "contact",
+            "url": "https://business-target.com/contact-us/",
+            "score": 0.9672,
+            "baseline": "data/screenshots/baseline/Business_Target_contact.png",
+            "current": "data/screenshots/current/Business_Target_contact.png",
+            "diff": "data/screenshots/diff/Business_Target_contact.png"
+        }
+    ],
+    "CXO Matters": [
+        {
+            "page": "resources",
+            "url": "https://cxomatters.com/resources/",
+            "score": 0.951,
+            "baseline": "data/screenshots/baseline/CXO_Matters_resources.png",
+            "current": "data/screenshots/current/CXO_Matters_resources.png",
+            "diff": "data/screenshots/diff/CXO_Matters_resources.png"
+        }
+    ],
+    "World Business Hour": [
+        {
+            "page": "home",
+            "url": "https://worldbusinesshour.com/",
+            "score": 0.9474,
+            "baseline": "data/screenshots/baseline/World_Business_Hour_home.png",
+            "current": "data/screenshots/current/World_Business_Hour_home.png",
+            "diff": "data/screenshots/diff/World_Business_Hour_home.png"
+        }
+    ],
+    "Lead Marketwise": [
+        {
+            "page": "home",
+            "url": "https://leadmarketwise.com/",
+            "score": 0.7478,
+            "baseline": "data/screenshots/baseline/Lead_Marketwise_home.png",
+            "current": "data/screenshots/current/Lead_Marketwise_home.png",
+            "diff": "data/screenshots/diff/Lead_Marketwise_home.png"
+        }
+    ],
+    "Finance Pulse Daily": [
+        {
+            "page": "home",
+            "url": "https://financepulsedaily.com/",
+            "score": 0.9073,
+            "baseline": "data/screenshots/baseline/Finance_Pulse_Daily_home.png",
+            "current": "data/screenshots/current/Finance_Pulse_Daily_home.png",
+            "diff": "data/screenshots/diff/Finance_Pulse_Daily_home.png"
+        }
+    ],
+    "Economic Matter": [
+        {
+            "page": "home",
+            "url": "https://economicmatter.com/",
+            "score": 0.7866,
+            "baseline": "data/screenshots/baseline/Economic_Matter_home.png",
+            "current": "data/screenshots/current/Economic_Matter_home.png",
+            "diff": "data/screenshots/diff/Economic_Matter_home.png"
+        },
+        {
+            "page": "resources",
+            "url": "https://economicmatter.com/resources/",
+            "score": 0.5691,
+            "baseline": "data/screenshots/baseline/Economic_Matter_resources.png",
+            "current": "data/screenshots/current/Economic_Matter_resources.png",
+            "diff": "data/screenshots/diff/Economic_Matter_resources.png"
+        }
+    ],
+    "The HR Empire": [
+        {
+            "page": "home",
+            "url": "https://thehrempire.com/",
+            "score": 0.9734,
+            "baseline": "data/screenshots/baseline/The_HR_Empire_home.png",
+            "current": "data/screenshots/current/The_HR_Empire_home.png",
+            "diff": "data/screenshots/diff/The_HR_Empire_home.png"
+        },
+        {
+            "page": "typ",
+            "url": "https://thehrempire.com/whats-next-for-fusion-applications-decision-intelligence-typ/",
+            "score": 0.9678,
+            "baseline": "data/screenshots/baseline/The_HR_Empire_typ.png",
+            "current": "data/screenshots/current/The_HR_Empire_typ.png",
+            "diff": "data/screenshots/diff/The_HR_Empire_typ.png"
+        }
+    ],
+    "HR Trends Daily": [
+        {
+            "page": "home",
+            "url": "https://hrtrendsdaily.com/",
+            "score": 0.968,
+            "baseline": "data/screenshots/baseline/HR_Trends_Daily_home.png",
+            "current": "data/screenshots/current/HR_Trends_Daily_home.png",
+            "diff": "data/screenshots/diff/HR_Trends_Daily_home.png"
+        },
+        {
+            "page": "resources",
+            "url": "https://hrtrendsdaily.com/resources/",
+            "score": 0.9783,
+            "baseline": "data/screenshots/baseline/HR_Trends_Daily_resources.png",
+            "current": "data/screenshots/current/HR_Trends_Daily_resources.png",
+            "diff": "data/screenshots/diff/HR_Trends_Daily_resources.png"
+        },
+        {
+            "page": "contact",
+            "url": "https://hrtrendsdaily.com/contact-us/",
+            "score": 0.8284,
+            "baseline": "data/screenshots/baseline/HR_Trends_Daily_contact.png",
+            "current": "data/screenshots/current/HR_Trends_Daily_contact.png",
+            "diff": "data/screenshots/diff/HR_Trends_Daily_contact.png"
+        }
+    ],
+    "The HR Medium": [
+        {
+            "page": "home",
+            "url": "https://thehrmedium.com/",
+            "score": 0.9622,
+            "baseline": "data/screenshots/baseline/The_HR_Medium_home.png",
+            "current": "data/screenshots/current/The_HR_Medium_home.png",
+            "diff": "data/screenshots/diff/The_HR_Medium_home.png"
+        },
+        {
+            "page": "resources",
+            "url": "https://thehrmedium.com/resources/",
+            "score": 0.8592,
+            "baseline": "data/screenshots/baseline/The_HR_Medium_resources.png",
+            "current": "data/screenshots/current/The_HR_Medium_resources.png",
+            "diff": "data/screenshots/diff/The_HR_Medium_resources.png"
+        }
+    ],
+    "Global Supply Chain News": [
+        {
+            "page": "contact",
+            "url": "https://globalsupplychainnews.com/contact-us/",
+            "score": 0.9057,
+            "baseline": "data/screenshots/baseline/Global_Supply_Chain_News_contact.png",
+            "current": "data/screenshots/current/Global_Supply_Chain_News_contact.png",
+            "diff": "data/screenshots/diff/Global_Supply_Chain_News_contact.png"
+        }
+    ],
+    "LearningTech Edu": [
+        {
+            "page": "home",
+            "url": "https://learningtechedu.com/",
+            "score": 0.8956,
+            "baseline": "data/screenshots/baseline/LearningTech_Edu_home.png",
+            "current": "data/screenshots/current/LearningTech_Edu_home.png",
+            "diff": "data/screenshots/diff/LearningTech_Edu_home.png"
+        }
+    ],
+    "PublicAffairs Daily": [
+        {
+            "page": "home",
+            "url": "https://publicaffairsdaily.com/",
+            "score": 0.9639,
+            "baseline": "data/screenshots/baseline/PublicAffairs_Daily_home.png",
+            "current": "data/screenshots/current/PublicAffairs_Daily_home.png",
+            "diff": "data/screenshots/diff/PublicAffairs_Daily_home.png"
+        }
+    ],
+    "Universal Insights": [
+        {
+            "page": "resources",
+            "url": "https://theuniversalinsights.com/resources/",
+            "score": 0.9298,
+            "baseline": "data/screenshots/baseline/Universal_Insights_resources.png",
+            "current": "data/screenshots/current/Universal_Insights_resources.png",
+            "diff": "data/screenshots/diff/Universal_Insights_resources.png"
+        }
+    ]
+}
