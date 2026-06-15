@@ -222,7 +222,7 @@ def background_task():
     asyncio.run(async_background_task())
 
 def register_routes(flask_app):
-    @flask_app.route('/data/screenshots/<path:subdir>/<filename>')
+    @flask_app.route('/api/data/screenshots/<path:subdir>/<filename>')
     def serve_screenshot(subdir, filename):
         screenshot_dir = os.path.join(PHASE_2_ROOT, 'data', 'screenshots', subdir)
         return send_from_directory(screenshot_dir, filename)
@@ -271,10 +271,6 @@ def register_routes(flask_app):
 
             issues = []
             for issue_idx, change in enumerate(site_changes):
-                base_url = request.host_url
-                if not base_url.endswith('/'):
-                    base_url += '/'
-                
                 if change.get("type") == "text":
                     issues.append({
                         "id": f"issue-text-{index}-{issue_idx}",
@@ -290,9 +286,9 @@ def register_routes(flask_app):
                         "page": change["page"],
                         "type": "screenshot",
                         "status": "pending",
-                        "baselineScreenshot": f"{base_url}{change['baseline']}",
-                        "currentScreenshot": f"{base_url}{change['current']}",
-                        "differenceScreenshot": f"{base_url}{change['diff']}",
+                        "baselineScreenshot": f"/api/{change['baseline']}",
+                        "currentScreenshot": f"/api/{change['current']}",
+                        "differenceScreenshot": f"/api/{change['diff']}",
                     })
 
             results.append({

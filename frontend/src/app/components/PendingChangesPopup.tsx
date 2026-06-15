@@ -123,7 +123,7 @@ export function PendingChangesPopup({
                       </td>
                       <td className="px-4 py-4">
                         <a
-                          href={`${API_BASE_URL}/pending/${item.file}`}
+                          href={`${API_BASE_URL}/api/pending/${item.file}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center gap-1.5 text-[13px] text-[#651fff] hover:underline font-medium"
