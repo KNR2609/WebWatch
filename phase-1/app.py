@@ -15,7 +15,9 @@ latest_results = []
 def run_monitoring():
     global latest_results
 
-    with open("sites.json") as f:
+    import os
+    sites_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sites.json")
+    with open(sites_path) as f:
         sites = json.load(f)
 
     results = []

@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Phase1Website, WebsiteStatus } from '../types';
 import { Search, Filter, Circle, Loader2 } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 export function Phase1() {
   const [websites, setWebsites] = useState<Phase1Website[]>([]);
@@ -16,7 +17,7 @@ export function Phase1() {
 
     async function fetchData() {
       try {
-        const res = await fetch('http://localhost:5000/api/monitor');
+        const res = await fetch(`${API_BASE_URL}/api/monitor`);
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
@@ -105,7 +106,7 @@ export function Phase1() {
             <h4 className="text-[14px] font-bold text-red-900 mb-1">Backend Connection Error</h4>
             <p className="text-[12px] text-red-700 mb-2">
               Unable to reach the website monitoring backend server. Please verify that the Flask server is running at{' '}
-              <code className="bg-red-100 px-1.5 py-0.5 rounded font-mono text-red-800 text-[11px]">http://localhost:5000</code>.
+              <code className="bg-red-100 px-1.5 py-0.5 rounded font-mono text-red-800 text-[11px]">{API_BASE_URL}</code>.
             </p>
             <p className="text-[11px] text-red-600 font-mono">Error Details: {error}</p>
           </div>
@@ -232,7 +233,7 @@ export function Phase1() {
                       <div className="flex flex-col items-center justify-center gap-2">
                         <span className="text-[16px] font-semibold">Failed to connect to backend</span>
                         <span className="text-[12px] text-gray-500 max-w-[400px] mx-auto">
-                          Make sure the Flask backend app is running at <code className="bg-red-50 px-1.5 py-0.5 rounded text-red-600 font-mono">http://localhost:5000</code>.
+                          Make sure the Flask backend app is running at <code className="bg-red-50 px-1.5 py-0.5 rounded text-red-600 font-mono">{API_BASE_URL}</code>.
                         </span>
                         <span className="text-[11px] text-red-400 mt-1">({error})</span>
                       </div>

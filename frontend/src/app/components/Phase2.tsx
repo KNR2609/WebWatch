@@ -1,18 +1,17 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { Phase2Website, Issue, IssueStatus } from '../types';
 import { generatePhase2Data } from '../data/phase2Data';
 import { Play, Search, ArrowUpDown, CheckCircle, XCircle, FileText } from 'lucide-react';
 import { TextDiff } from './TextDiff';
+import { API_BASE_URL } from '../config';
 
-interface Phase2Props {
-  isRunningTest: boolean;
-  progress: number;
-  onRunTest: () => void;
-  websites: Phase2Website[];
-}
-
-export function Phase2({ isRunningTest, progress, onRunTest, websites }: Phase2Props) {
-  const [selectedWebsite, setSelectedWebsite] = useState<Phase2Website | null>(websites[0]);
+export function Phase2() {
+  const [websites, setWebsites] = useState<Phase2Website[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isRunningTest, setIsRunningTest] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [selectedWebsite, setSelectedWebsite] = useState<Phase2Website | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState<'name' | 'issues-high' | 'issues-low'>('name');
   const [selectedImage, setSelectedImage] = useState<{ src: string; title: string } | null>(null);
@@ -21,47 +20,182 @@ export function Phase2({ isRunningTest, progress, onRunTest, websites }: Phase2P
     action: 'approve' | 'reject';
     websiteId: string;
   } | null>(null);
-  const [localWebsites, setLocalWebsites] = useState<Phase2Website[]>(websites);
+  const [currentlyTesting, setCurrentlyTesting] = useState<string[]>([]);
 
+  const fetchResults = async (selectFirst = false) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/dp-issues`);
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+      const data = await res.json();
+      setWebsites(data);
+      setError(null);
+      if (selectFirst && data.length > 0) {
+        setSelectedWebsite(data[0]);
+      } else if (selectedWebsite) {
+        const updated = data.find((w: Phase2Website) => w.id === selectedWebsite.id);
+        if (updated) {
+          setSelectedWebsite(updated);
+        }
+      }
+    } catch (err: any) {
+      setError(err.message || 'Failed to fetch visual monitoring data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchResultsRef = useRef(fetchResults);
   useEffect(() => {
-    setLocalWebsites(websites);
-  }, [websites]);
+    fetchResultsRef.current = fetchResults;
+  });
+
+  // Check if test is already running on mount, and poll results periodically
+  useEffect(() => {
+    fetchResults(true);
+
+    const checkRunningOnMount = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/phase-2/status`);
+        if (res.ok) {
+          const statusData = await res.json();
+          if (statusData.running) {
+            setIsRunningTest(true);
+          }
+        }
+      } catch (err) {
+        console.error('Error checking run status on mount:', err);
+      }
+    };
+    checkRunningOnMount();
+
+    const interval = setInterval(() => {
+      fetchResults(false);
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Poll status, progress, and incremental results reactively when isRunningTest is true
+  useEffect(() => {
+    if (!isRunningTest) return;
+
+    // Estimate progress (up to 95%)
+    let progressVal = 0;
+    const progressInterval = setInterval(() => {
+      progressVal = Math.min(progressVal + (100 / 60), 95);
+      setProgress(progressVal);
+    }, 1000);
+
+    // Check status and pull results incrementally
+    const checkStatus = setInterval(async () => {
+      try {
+        const statusRes = await fetch(`${API_BASE_URL}/api/phase-2/status`);
+        if (statusRes.ok) {
+          const statusData = await statusRes.json();
+
+          if (statusData.currently_testing) {
+            setCurrentlyTesting(statusData.currently_testing);
+          }
+
+          // Pull new results dynamically as they complete
+          await fetchResultsRef.current(false);
+
+          if (!statusData.running) {
+            clearInterval(checkStatus);
+            clearInterval(progressInterval);
+            setProgress(100);
+            setCurrentlyTesting([]);
+            await fetchResultsRef.current();
+            setTimeout(() => {
+              setIsRunningTest(false);
+              setProgress(0);
+            }, 500);
+          }
+        }
+      } catch (err) {
+        console.error('Error polling status:', err);
+      }
+    }, 3000);
+
+    return () => {
+      clearInterval(progressInterval);
+      clearInterval(checkStatus);
+    };
+  }, [isRunningTest]);
+
+  const handleRunTest = async () => {
+    try {
+      const startRes = await fetch(`${API_BASE_URL}/api/phase-2/run`, {
+        method: 'POST',
+      });
+      if (!startRes.ok) {
+        console.error('Failed to start test');
+        return;
+      }
+      setIsRunningTest(true);
+      setProgress(0);
+      setCurrentlyTesting([]);
+    } catch (err) {
+      console.error('Error running test:', err);
+    }
+  };
 
   const handleActionClick = (issueId: string, action: 'approve' | 'reject', websiteId: string) => {
     setConfirmAction({ issueId, action, websiteId });
   };
 
-  const handleConfirmAction = () => {
+  const handleConfirmAction = async () => {
     if (!confirmAction) return;
 
     const { issueId, action, websiteId } = confirmAction;
     const newStatus: IssueStatus = action === 'approve' ? 'approved' : 'rejected';
 
-    setLocalWebsites((prev) =>
-      prev.map((website) => {
-        if (website.id === websiteId) {
-          return {
-            ...website,
-            issues: website.issues.map((issue) =>
-              issue.id === issueId ? { ...issue, status: newStatus } : issue
-            ),
-          };
-        }
-        return website;
-      })
-    );
+    const website = websites.find((w) => w.id === websiteId);
+    const issue = website?.issues.find((i) => i.id === issueId);
 
-    if (selectedWebsite?.id === websiteId) {
-      setSelectedWebsite((prev) =>
-        prev
-          ? {
+    if (website && issue) {
+      // Optimistic update
+      setWebsites((prev) =>
+        prev.map((w) => {
+          if (w.id === websiteId) {
+            return {
+              ...w,
+              issues: w.issues.map((i) =>
+                i.id === issueId ? { ...i, status: newStatus } : i
+              ),
+            };
+          }
+          return w;
+        })
+      );
+      if (selectedWebsite?.id === websiteId) {
+        setSelectedWebsite((prev) =>
+          prev
+            ? {
               ...prev,
-              issues: prev.issues.map((issue) =>
-                issue.id === issueId ? { ...issue, status: newStatus } : issue
+              issues: prev.issues.map((i) =>
+                i.id === issueId ? { ...i, status: newStatus } : i
               ),
             }
-          : null
-      );
+            : null
+        );
+      }
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/phase-2/action`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action, website: website.name, page: issue.page }),
+        });
+        if (res.ok) {
+          await fetchResults();
+        } else {
+          console.error('Failed to perform action');
+        }
+      } catch (err) {
+        console.error('Error performing action:', err);
+      }
     }
 
     setConfirmAction(null);
@@ -72,7 +206,7 @@ export function Phase2({ isRunningTest, progress, onRunTest, websites }: Phase2P
   };
 
   const filteredAndSortedWebsites = useMemo(() => {
-    let filtered = localWebsites;
+    let filtered = websites;
 
     if (searchTerm) {
       filtered = filtered.filter(
@@ -93,7 +227,7 @@ export function Phase2({ isRunningTest, progress, onRunTest, websites }: Phase2P
     });
 
     return sorted;
-  }, [localWebsites, searchTerm, sortBy]);
+  }, [websites, searchTerm, sortBy]);
 
   return (
     <div className="flex h-full bg-gray-50">
@@ -103,13 +237,12 @@ export function Phase2({ isRunningTest, progress, onRunTest, websites }: Phase2P
           <h3 className="text-[16px] font-bold mb-4 text-gray-900">DP Testing Errors</h3>
 
           <button
-            onClick={onRunTest}
+            onClick={handleRunTest}
             disabled={isRunningTest}
-            className={`w-full mb-4 px-4 py-2 text-[12px] flex items-center justify-center gap-2 transition-colors ${
-              isRunningTest
+            className={`w-full mb-4 px-4 py-2 text-[12px] flex items-center justify-center gap-2 transition-colors ${isRunningTest
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed rounded-[6px]'
                 : 'bg-[#651fff] text-white rounded-[6px] hover:bg-[#5817d9]'
-            }`}
+              }`}
           >
             {!isRunningTest && <Play className="w-4 h-4" />}
             {isRunningTest ? 'Running Test...' : 'Run Test'}
@@ -124,6 +257,18 @@ export function Phase2({ isRunningTest, progress, onRunTest, websites }: Phase2P
                 ></div>
               </div>
               <p className="text-[12px] text-gray-600 mt-2 text-center font-medium">{Math.round(progress)}%</p>
+              {currentlyTesting.length > 0 && (
+                <div className="mt-2 p-2 bg-gray-50 rounded border border-gray-100">
+                  <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Testing websites:</p>
+                  <div className="flex flex-wrap gap-1 max-h-24 overflow-y-auto">
+                    {currentlyTesting.map((name) => (
+                      <span key={name} className="px-1.5 py-0.5 bg-[#e9e1ff] text-[#651fff] rounded text-[10px] font-medium animate-pulse">
+                        {name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
@@ -157,11 +302,10 @@ export function Phase2({ isRunningTest, progress, onRunTest, websites }: Phase2P
             <button
               key={website.id}
               onClick={() => setSelectedWebsite(website)}
-              className={`w-full px-4 py-3 text-left transition-colors border-b border-gray-100 ${
-                selectedWebsite?.id === website.id
+              className={`w-full px-4 py-3 text-left transition-colors border-b border-gray-100 ${selectedWebsite?.id === website.id
                   ? 'bg-[#e9e1ff] border-l-4 border-l-[#651fff]'
                   : 'hover:bg-gray-50'
-              }`}
+                }`}
             >
               <div className="flex items-center justify-between gap-3 mb-1">
                 <div className="flex-1 min-w-0 text-[14px] font-medium truncate text-gray-900">
@@ -198,13 +342,12 @@ export function Phase2({ isRunningTest, progress, onRunTest, websites }: Phase2P
                 {selectedWebsite.issues.map((issue) => (
                   <div
                     key={issue.id}
-                    className={`relative border border-gray-200 bg-white rounded-[16px] p-5 drop-shadow-[0px_4px_20px_rgba(149,157,165,0.25)] ${
-                      issue.status === 'approved'
+                    className={`relative border border-gray-200 bg-white rounded-[16px] p-5 drop-shadow-[0px_4px_20px_rgba(149,157,165,0.25)] ${issue.status === 'approved'
                         ? 'border-green-300 bg-green-50/50'
                         : issue.status === 'rejected'
-                        ? 'border-red-300 bg-red-50/50'
-                        : ''
-                    }`}
+                          ? 'border-red-300 bg-red-50/50'
+                          : ''
+                      }`}
                   >
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex items-center gap-2.5">
@@ -214,11 +357,10 @@ export function Phase2({ isRunningTest, progress, onRunTest, websites }: Phase2P
                         </h3>
                         {issue.status !== 'pending' && (
                           <span
-                            className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-[4px] text-[12px] font-medium ${
-                              issue.status === 'approved'
+                            className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-[4px] text-[12px] font-medium ${issue.status === 'approved'
                                 ? 'bg-green-100 text-green-700'
                                 : 'bg-red-100 text-red-700'
-                            }`}
+                              }`}
                           >
                             {issue.status === 'approved' ? (
                               <>
@@ -237,22 +379,20 @@ export function Phase2({ isRunningTest, progress, onRunTest, websites }: Phase2P
                       <div className="flex gap-2">
                         <button
                           onClick={() => handleActionClick(issue.id, 'approve', selectedWebsite.id)}
-                          className={`flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium transition-colors rounded-[6px] ${
-                            issue.status === 'approved'
+                          className={`flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium transition-colors rounded-[6px] ${issue.status === 'approved'
                               ? 'bg-green-600 text-white'
                               : 'bg-green-600/90 text-white hover:bg-green-600'
-                          }`}
+                            }`}
                         >
                           <CheckCircle className="w-4 h-4" />
                           Approve
                         </button>
                         <button
                           onClick={() => handleActionClick(issue.id, 'reject', selectedWebsite.id)}
-                          className={`flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium transition-colors rounded-[6px] ${
-                            issue.status === 'rejected'
+                          className={`flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-medium transition-colors rounded-[6px] ${issue.status === 'rejected'
                               ? 'bg-red-600 text-white'
                               : 'bg-red-600/90 text-white hover:bg-red-600'
-                          }`}
+                            }`}
                         >
                           <XCircle className="w-4 h-4" />
                           Reject
@@ -376,11 +516,10 @@ export function Phase2({ isRunningTest, progress, onRunTest, websites }: Phase2P
               </button>
               <button
                 onClick={handleConfirmAction}
-                className={`flex-1 px-4 py-2 text-[12px] font-medium transition-colors ${
-                  confirmAction.action === 'approve'
+                className={`flex-1 px-4 py-2 text-[12px] font-medium transition-colors ${confirmAction.action === 'approve'
                     ? 'bg-green-600 text-white rounded-[6px] hover:bg-green-700'
                     : 'bg-red-600 text-white rounded-[6px] hover:bg-red-700'
-                }`}
+                  }`}
               >
                 {confirmAction.action === 'approve' ? 'Approve' : 'Reject'}
               </button>

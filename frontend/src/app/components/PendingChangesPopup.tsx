@@ -1,38 +1,47 @@
 import { useEffect, useRef } from 'react';
 import { X, ExternalLink, Check, XCircle } from 'lucide-react';
-import { Phase2Website } from '../types';
+import { PendingChange } from '../App';
+import { API_BASE_URL } from '../config';
 
 interface PendingChangesPopupProps {
-  websites: Phase2Website[];
+  pendingChanges: PendingChange[];
   onClose: () => void;
-  onApproveAll: (websiteId: string) => void;
-  onRejectAll: (websiteId: string) => void;
+  onRefresh: () => void;
 }
 
-function toFileName(websiteName: string) {
-  return websiteName.replace(/\s+/g, '_') + '_pages.json';
-}
-
-function toCodeUrl(websiteName: string) {
-  return `https://github.com/weborbit/checks/blob/main/sites/${toFileName(websiteName)}`;
+function parseFilename(filename: string) {
+  // website_name_api_name.json
+  const clean = filename.replace('.json', '');
+  const parts = clean.split('_');
+  if (parts.length > 1) {
+    const website = parts.slice(0, -1).join(' ');
+    const api = parts[parts.length - 1];
+    return { website, api };
+  }
+  return { website: clean, api: 'General' };
 }
 
 export function PendingChangesPopup({
-  websites,
+  pendingChanges,
   onClose,
-  onApproveAll,
-  onRejectAll,
+  onRefresh,
 }: PendingChangesPopupProps) {
   const popupRef = useRef<HTMLDivElement>(null);
 
-  const pendingWebsites = websites
-    .filter((w) => w.issues.some((i) => i.status === 'pending'))
-    .map((w) => ({
-      ...w,
-      pendingCount: w.issues.filter((i) => i.status === 'pending').length,
-    }));
+  const totalPending = pendingChanges.reduce((sum, item) => sum + item.changes_count, 0);
 
-  const totalPending = pendingWebsites.reduce((sum, w) => sum + w.pendingCount, 0);
+  const handleAction = async (filename: string, action: 'approve' | 'reject') => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/${action}/${encodeURIComponent(filename)}`);
+      if (res.ok) {
+        onRefresh();
+      } else {
+        console.error(`Failed to ${action} changes:`, res.statusText);
+      }
+    } catch (err) {
+      console.error(`Error performing ${action} action:`, err);
+    }
+  };
 
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
@@ -76,7 +85,7 @@ export function PendingChangesPopup({
         </div>
 
         {/* Body */}
-        {pendingWebsites.length === 0 ? (
+        {!Array.isArray(pendingChanges) || pendingChanges.length === 0 ? (
           <div className="px-6 py-16 text-center text-gray-400 text-[14px]">
             No pending changes
           </div>
@@ -100,53 +109,56 @@ export function PendingChangesPopup({
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
-                {pendingWebsites.map((website) => (
-                  <tr
-                    key={website.id}
-                    className="hover:bg-gray-50/70 transition-colors"
-                  >
-                    <td className="px-6 py-4">
-                      <span className="text-[13px] font-medium text-gray-800">
-                        {website.name}
-                      </span>
-                    </td>
-                    <td className="px-4 py-4">
-                      <a
-                        href={toCodeUrl(website.name)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 text-[13px] text-[#651fff] hover:underline font-medium"
-                      >
-                        <span className="truncate max-w-[180px]">{toFileName(website.name)}</span>
-                        <ExternalLink className="w-3 h-3 flex-shrink-0" />
-                      </a>
-                    </td>
-                    <td className="px-4 py-4 text-center">
-                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-amber-50 text-amber-600 text-[12px] font-bold">
-                        {website.pendingCount}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center justify-center gap-3">
-                        <button
-                          onClick={() => onApproveAll(website.id)}
-                          className="flex items-center gap-1 text-[12px] font-semibold text-emerald-600 hover:text-emerald-700 transition-colors"
+                {Array.isArray(pendingChanges) && pendingChanges.map((item) => {
+                  const { website } = parseFilename(item.file);
+                  return (
+                    <tr
+                      key={item.file}
+                      className="hover:bg-gray-50/70 transition-colors"
+                    >
+                      <td className="px-6 py-4">
+                        <span className="text-[13px] font-medium text-gray-800 capitalize">
+                          {website}
+                        </span>
+                      </td>
+                      <td className="px-4 py-4">
+                        <a
+                          href={`${API_BASE_URL}/api/pending/${item.file}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1.5 text-[13px] text-[#651fff] hover:underline font-medium"
                         >
-                          <Check className="w-3.5 h-3.5" />
-                          Approve
-                        </button>
-                        <span className="text-gray-200 select-none">|</span>
-                        <button
-                          onClick={() => onRejectAll(website.id)}
-                          className="flex items-center gap-1 text-[12px] font-semibold text-red-500 hover:text-red-600 transition-colors"
-                        >
-                          <XCircle className="w-3.5 h-3.5" />
-                          Reject
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                          <span className="truncate max-w-[180px]">{item.file}</span>
+                          <ExternalLink className="w-3 h-3 flex-shrink-0" />
+                        </a>
+                      </td>
+                      <td className="px-4 py-4 text-center">
+                        <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-amber-50 text-amber-600 text-[12px] font-bold">
+                          {item.changes_count}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center justify-center gap-3">
+                          <button
+                            onClick={() => handleAction(item.file, 'approve')}
+                            className="flex items-center gap-1 text-[12px] font-semibold text-emerald-600 hover:text-emerald-700 transition-colors"
+                          >
+                            <Check className="w-3.5 h-3.5" />
+                            Approve
+                          </button>
+                          <span className="text-gray-200 select-none">|</span>
+                          <button
+                            onClick={() => handleAction(item.file, 'reject')}
+                            className="flex items-center gap-1 text-[12px] font-semibold text-red-500 hover:text-red-600 transition-colors"
+                          >
+                            <XCircle className="w-3.5 h-3.5" />
+                            Reject
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
