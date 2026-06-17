@@ -433,7 +433,7 @@ export function Phase2() {
                           <div className="relative border border-gray-200 rounded-[6px] overflow-hidden bg-white cursor-pointer hover:border-red-400 transition-colors" onClick={() => setSelectedImage({ src: issue.differenceScreenshot!, title: `${issue.page} - Difference` })}>
                             <img src={issue.differenceScreenshot} alt="Difference" className="w-full h-auto" />
                             {/* Highlighted differences with labels */}
-                            <div className="absolute top-2 left-2 pointer-events-none">
+                            {/* <div className="absolute top-2 left-2 pointer-events-none">
                               <div className="border-2 border-red-500 bg-red-500/10 w-24 h-16"></div>
                               <div className="mt-1 bg-red-600 text-white text-xs px-2 py-0.5 rounded font-medium">
                                 Header Layout
@@ -450,7 +450,7 @@ export function Phase2() {
                               <div className="mt-1 bg-red-600 text-white text-xs px-2 py-0.5 rounded font-medium whitespace-nowrap">
                                 Content Alignment
                               </div>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -531,10 +531,10 @@ export function Phase2() {
       {/* Image Modal */}
       {selectedImage && (
         <div
-          className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-6"
+          className="fixed inset-0 bg-black/70 z-50 flex items-start justify-center overflow-y-auto p-6"
           onClick={() => setSelectedImage(null)}
         >
-          <div className="max-w-5xl w-full" onClick={(e) => e.stopPropagation()}>
+          <div className="max-w-5xl w-full my-4" onClick={(e) => e.stopPropagation()}>
             <div className="mb-3 flex justify-between items-center">
               <h2 className="text-white text-[16px] font-bold">{selectedImage.title}</h2>
               <button
