@@ -13,6 +13,10 @@ Resources
 Blog
 Resources
 All Case Studies eBooks Guides Infographics Reports Webinars White Papers
+Guide
+ HSI
+6 Steps to Build Leadership Buy in for EHS Technology
+Download Now
 eBook
  Dynatrace
 Drive better business outcomes with modern log management
@@ -44,10 +48,6 @@ Download Now
 Guide
  Economic Development Board
 Singapore Tech Ecosystem Guide
-Download Now
-Guide
- Juniper Networks
-Wired and Wireless LAN Solutions Comparison Guide
 Download Now
 
 Make informed business decisions with Economic Matter!

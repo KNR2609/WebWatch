@@ -4,6 +4,10 @@ Entertainment
 Automobile
 Blog
 Resources
+AI Driven Game Design for Trustworthy NPC Dialogue Systems in Mystery Games
+
+June 18, 2026 | Aiswarya MR
+
 Beyond Dialogue Trees: AI Driven Game Design for Social Deduction Worlds
 
 June 15, 2026 | Aiswarya MR
@@ -19,10 +23,6 @@ June 3, 2026 | Purvi Senapati
 Why AI Driven Game Design Is Reshaping Adaptive Horror Pacing for Indie Narrative Studios
 
 June 3, 2026 | Aiswarya MR
-
-Enterprise IoT Technology: Driving Smarter Business Operations in 2026
-
-June 1, 2026 | Aiswarya MR
 
 Mobile Development
  Purvi Senapati
@@ -43,7 +43,7 @@ Preparing for the Multiphysics Future of 3D ICs
 The AI, IoT, and Traceability Roadmap
 Entertainment
  Purvi Senapati
- June 01, 2026
+ June 03, 2026
 How Businesses Are Leveraging Video Streaming Services for Growth
  Purvi Senapati
  April 23, 2026

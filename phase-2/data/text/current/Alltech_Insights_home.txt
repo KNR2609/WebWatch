@@ -4,6 +4,11 @@ IT Security
 DevOps
 Blog
 Resources
+WIRELESS TECHNOLOGY
+Wireless Infrastructure Management Systems for Improving Network Resilience and Uptime
+Vishwa Prasad
+•
+June 17, 2026
 IT OPERATIONS
 The Growing Importance of Enterprise Lifecycle Automation in Large Organizations
 Rajshree Sharma
@@ -14,13 +19,11 @@ Why AIOps Platforms for Real-Time Monitoring Matter in the Age of Cloud Complexi
 Vishwa Prasad
 •
 May 27, 2026
-IT OPERATIONS
-What IT Asset Governance Really Means for Modern It Operations 
+Wireless technology
+Wireless technology
+Wireless Infrastructure Management Systems for Improving Network Resilience and Uptime
 Vishwa Prasad
-•
-May 20, 2026
-Wireless technology
-Wireless technology
+- June 17, 2026
 Are Advanced Wireless Networks the Key to a Fully Connected World?
 Vishwa Prasad
 - April 15, 2026
@@ -39,9 +42,6 @@ Imran Khan
 New Technology Trends in Wireless Technology That Are Shaping Tomorrow
 Abhinand Anil
 - December 30, 2025
-Healthcare Connectivity Revolution: Latest Technology Trends in Wireless Medical Devices 
-Vishwa Prasad
-- December 16, 2025
 Resources
 White Paper
 Opentext
