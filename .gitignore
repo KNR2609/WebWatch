@@ -19,5 +19,5 @@ dist/
 .env.*.local
 
 # Screenshots
-# phase-2/data/
+phase-2/data/
 

@@ -12,6 +12,26 @@ Resources
 Resources
 All Case Studies eBooks Guides Infographics Reports Webinars White Papers
 Guide
+Salesforce
+Leverage Your Data to Build Your Agentforce
+Download Now
+Infographic
+Lenovo
+Deep Dive: The Tech behind the FIFA World Cup™: Lenovo’s digital gameplan for FIFA.
+Download Now
+eBook
+Dynatrace
+Maximize Business Outcomes Modern Log Management
+Download Now
+Report
+Amazon Web Services
+Winning agentic AI with your commercial data estates
+Download Now
+Report
+AWS
+The Total Economic Impact™ of Amazon Connect 
+Download Now
+Guide
 Enable
 A Comprehensive Guide to AI in Rebate Management
 Download Now
@@ -134,26 +154,6 @@ Download Now
 Report
 Adobe
 Creative Trends 2025
-Download Now
-Guide
-IBM
-Beyond the hype. How AI assistants drive real business value
-Download Now
-Case Study
-Jade Global
-Legacy Integration Slowing You Down? See Marvell’s Solution.
-Download Now
-Guide
-IBM
-Put AI to work for IT operations
-Download Now
-Case Study
-RS
-Optimizing Ordering for Field Efficiency
-Download Now
-Report
-Building Engines
-The State of Commercial Property Management Technology 2025
 Download Now
 Want to read more on emerging technologies, gadgets, mobile technology, tech innovations and more? Tech Alert Live is an ideal content hub to cater to all your needs to get tech related information.
   

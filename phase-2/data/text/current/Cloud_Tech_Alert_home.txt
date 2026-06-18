@@ -5,6 +5,14 @@ Cloud Security
 Cloud Migration
 Blog
 Resources
+Why Sensitive Data Continues to Spread Across Cloud File Hosting Platforms and How to Stop It
+
+June 16, 2026 | Shreya Sudharshan
+
+How to Choose Cloud Automation Tools for Kubernetes-Native Environments
+
+June 16, 2026 | Jijo George
+
 From Stores to Sensors: Cloud Management Platform Strategy for Retail Edge Operations
 
 June 12, 2026 | Aiswarya MR
@@ -16,14 +24,6 @@ June 9, 2026 | Jijo George
 Why Fast-Growing Companies Are Investing in Cloud Based Automation Before Hiring More Engineers
 
 June 2, 2026 | Shreya Sudharshan
-
-Why Cloud Automation Tools Matter More in a World of Short-Lived Workloads 
-
-June 2, 2026 | Shreya Sudharshan
-
-What Happens When AI Models Store Sensitive Data? The Growing Need for Secure Cloud Storage
-
-May 26, 2026 | Shreya Sudharshan
 
 Cloud Networking
  Jijo George
