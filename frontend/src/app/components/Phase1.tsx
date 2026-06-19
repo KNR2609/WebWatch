@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Phase1Website, WebsiteStatus } from '../types';
-import { Search, Filter, Circle, Loader2 } from 'lucide-react';
+import { Search, Filter, Circle, Loader2, ChevronDown, ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
 import { API_BASE_URL } from '../config';
 
 export function Phase1() {
@@ -11,6 +11,22 @@ export function Phase1() {
   const [filterStatus, setFilterStatus] = useState<'all' | WebsiteStatus>('all');
   const [filterHttpCode, setFilterHttpCode] = useState<'all' | number>('all');
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [sortField, setSortField] = useState<'name' | 'responseTime' | null>(null);
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+
+  const handleSort = (field: 'name' | 'responseTime') => {
+    if (sortField === field) {
+      if (sortOrder === 'asc') {
+        setSortOrder('desc');
+      } else {
+        setSortField(null);
+        setSortOrder('asc');
+      }
+    } else {
+      setSortField(field);
+      setSortOrder('asc');
+    }
+  };
 
   useEffect(() => {
     let active = true;
@@ -57,7 +73,7 @@ export function Phase1() {
   };
 
   const filteredWebsites = useMemo(() => {
-    let filtered = websites;
+    let filtered = [...websites];
 
     if (searchTerm) {
       filtered = filtered.filter(
@@ -75,8 +91,29 @@ export function Phase1() {
       filtered = filtered.filter((site) => site.httpCode === filterHttpCode);
     }
 
+    if (sortField) {
+      filtered.sort((a, b) => {
+        const valA = a[sortField];
+        const valB = b[sortField];
+
+        if (sortField === 'responseTime') {
+          const rA = valA !== null && valA !== undefined ? (valA as number) : Infinity;
+          const rB = valB !== null && valB !== undefined ? (valB as number) : Infinity;
+          return sortOrder === 'asc' ? rA - rB : rB - rA;
+        }
+
+        if (typeof valA === 'string' && typeof valB === 'string') {
+          return sortOrder === 'asc'
+            ? valA.localeCompare(valB)
+            : valB.localeCompare(valA);
+        }
+
+        return 0;
+      });
+    }
+
     return filtered;
-  }, [websites, searchTerm, filterStatus, filterHttpCode]);
+  }, [websites, searchTerm, filterStatus, filterHttpCode, sortField, sortOrder]);
 
   const stats = useMemo(() => {
     const total = websites.length;
@@ -91,10 +128,12 @@ export function Phase1() {
 
   function getStatusRowStyle(status: WebsiteStatus): string {
     switch (status) {
-      case 'Very Slow': return 'bg-yellow-400 text-gray-900';
-      case 'Server Down': return 'bg-fuchsia-600 text-white';
-      case 'Website Down': return 'bg-red-600 text-white';
-      default: return 'bg-white text-gray-900';
+      case 'Good': return 'bg-green-500 text-white hover:bg-green-600';
+      case 'Slow': return 'bg-orange-500 text-white hover:bg-orange-600';
+      case 'Very Slow': return 'bg-yellow-400 text-gray-900 hover:bg-yellow-500';
+      case 'Server Down': return 'bg-fuchsia-600 text-white hover:bg-fuchsia-700';
+      case 'Website Down': return 'bg-red-600 text-white hover:bg-red-700';
+      default: return 'bg-white text-gray-900 hover:bg-gray-50';
     }
   }
 
@@ -129,11 +168,12 @@ export function Phase1() {
 
       <div className="mb-6 bg-white rounded-[16px] border border-gray-200 p-5 drop-shadow-[0px_4px_20px_rgba(149,157,165,0.25)]">
           <h2 className="text-[20px] font-bold text-gray-900 mb-4">Website Monitoring Dashboard</h2>
-          <div className="flex flex-wrap gap-3 text-[12px]">
+          <div className="flex flex-wrap items-center gap-3 text-[12px]">
             <div className="flex items-center gap-2">
               <span className="font-medium text-gray-600">Total Sites:</span>
               <span className="px-2.5 py-1 rounded-[20px] font-medium bg-gray-100 text-gray-900">{stats.total}</span>
             </div>
+            <div className="h-4 w-px bg-gray-300 mx-1" />
             <div className="flex items-center gap-2">
               <Circle className="w-3 h-3 fill-green-500 text-green-500" />
               <span className="text-gray-600">Good: <span className="font-medium text-gray-900">{stats.good}</span></span>
@@ -185,22 +225,27 @@ export function Phase1() {
                 <option value="Server Down">Server Down</option>
                 <option value="Website Down">Website Down</option>
               </select>
+              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
             </div>
-            <select
-              value={filterHttpCode}
-              onChange={(e) => setFilterHttpCode(e.target.value === 'all' ? 'all' : Number(e.target.value))}
-              disabled={websites.length === 0}
-              className="px-4 py-2 text-[12px] border border-gray-300 rounded-[4px] bg-white focus:outline-none focus:ring-1 focus:ring-[#651fff] focus:border-[#651fff] appearance-none cursor-pointer min-w-[150px] transition-colors shadow-[inset_0px_1px_1px_0px_rgba(31,41,55,0.06)] disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
-            >
-              <option value="all">All HTTP Codes</option>
-              <option value="200">200 - OK</option>
-              <option value="301">301 - Moved</option>
-              <option value="302">302 - Found</option>
-              <option value="403">403 - Forbidden</option>
-              <option value="404">404 - Not Found</option>
-              <option value="500">500 - Server Error</option>
-              <option value="503">503 - Unavailable</option>
-            </select>
+            <div className="relative">
+              <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <select
+                value={filterHttpCode}
+                onChange={(e) => setFilterHttpCode(e.target.value === 'all' ? 'all' : Number(e.target.value))}
+                disabled={websites.length === 0}
+                className="pl-10 pr-8 py-2 text-[12px] border border-gray-300 rounded-[4px] bg-white focus:outline-none focus:ring-1 focus:ring-[#651fff] focus:border-[#651fff] appearance-none cursor-pointer min-w-[180px] transition-colors shadow-[inset_0px_1px_1px_0px_rgba(31,41,55,0.06)] disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
+              >
+                <option value="all">All HTTP Codes</option>
+                <option value="200">200 - OK</option>
+                <option value="301">301 - Moved</option>
+                <option value="302">302 - Found</option>
+                <option value="403">403 - Forbidden</option>
+                <option value="404">404 - Not Found</option>
+                <option value="500">500 - Server Error</option>
+                <option value="503">503 - Unavailable</option>
+              </select>
+              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+            </div>
           </div>
         </div>
 
@@ -209,10 +254,34 @@ export function Phase1() {
             <table className="w-full text-[14px]">
               <thead className="bg-[#f9fafb] border-b border-[rgba(4,32,69,0.1)]">
                 <tr>
-                  <th className="px-4 py-3 text-left font-medium text-[#6b7280] text-[12px] uppercase tracking-[0.48px]">Website Name</th>
+                  <th 
+                    onClick={() => handleSort('name')}
+                    className="px-4 py-3 text-left font-medium text-[#6b7280] text-[12px] uppercase tracking-[0.48px] cursor-pointer hover:bg-gray-100 transition-colors select-none"
+                  >
+                    <div className="flex items-center gap-1.5">
+                      <span>Website Name</span>
+                      {sortField === 'name' ? (
+                        sortOrder === 'asc' ? <ArrowUp className="w-3.5 h-3.5 text-[#651fff]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#651fff]" />
+                      ) : (
+                        <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 hover:text-gray-600" />
+                      )}
+                    </div>
+                  </th>
                   <th className="px-4 py-3 text-left font-medium text-[#6b7280] text-[12px] uppercase tracking-[0.48px]">URL</th>
                   <th className="px-4 py-3 text-left font-medium text-[#6b7280] text-[12px] uppercase tracking-[0.48px]">Status</th>
-                  <th className="px-4 py-3 text-left font-medium text-[#6b7280] text-[12px] uppercase tracking-[0.48px]">Response Time (ms)</th>
+                  <th 
+                    onClick={() => handleSort('responseTime')}
+                    className="px-4 py-3 text-left font-medium text-[#6b7280] text-[12px] uppercase tracking-[0.48px] cursor-pointer hover:bg-gray-100 transition-colors select-none"
+                  >
+                    <div className="flex items-center gap-1.5">
+                      <span>Response Time (ms)</span>
+                      {sortField === 'responseTime' ? (
+                        sortOrder === 'asc' ? <ArrowUp className="w-3.5 h-3.5 text-[#651fff]" /> : <ArrowDown className="w-3.5 h-3.5 text-[#651fff]" />
+                      ) : (
+                        <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 hover:text-gray-600" />
+                      )}
+                    </div>
+                  </th>
                   <th className="px-4 py-3 text-left font-medium text-[#6b7280] text-[12px] uppercase tracking-[0.48px]">HTTP Code</th>
                   <th className="px-4 py-3 text-left font-medium text-[#6b7280] text-[12px] uppercase tracking-[0.48px]">HTTP Message</th>
                 </tr>
@@ -248,13 +317,27 @@ export function Phase1() {
                 ) : (
                   filteredWebsites.map((website) => {
                     const rowStyle = getStatusRowStyle(website.status);
+                    const isDarkBg = ['Good', 'Slow', 'Server Down', 'Website Down'].includes(website.status);
                     return (
                       <tr
                         key={website.id}
-                        className={`${rowStyle} border-b border-[rgba(4,32,69,0.1)] hover:bg-gray-50 transition-colors`}
+                        className={`${rowStyle} border-b border-[rgba(4,32,69,0.1)] transition-colors`}
                       >
-                        <td className="px-4 py-3 font-medium text-gray-900">{website.name}</td>
-                        <td className="px-4 py-3 text-gray-600 text-[14px]">{website.url}</td>
+                        <td className={`px-4 py-3 font-medium ${isDarkBg ? 'text-white' : 'text-gray-900'}`}>{website.name}</td>
+                        <td className="px-4 py-3 text-[14px]">
+                          <a
+                            href={website.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`hover:underline transition-colors ${
+                              isDarkBg 
+                                ? 'text-white/95 hover:text-white' 
+                                : 'text-blue-600 hover:text-blue-800'
+                            }`}
+                          >
+                            {website.url}
+                          </a>
+                        </td>
                         <td className="px-4 py-3">
                           <span className={`inline-flex items-center gap-1.5 ${website.status === 'Good' ? 'font-medium' : 'font-semibold'}`}>
                             {website.status}
